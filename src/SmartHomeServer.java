@@ -1,6 +1,8 @@
 import com.lloseng.ocsf.server.AbstractServer;
 import com.lloseng.ocsf.server.ConnectionToClient;
 
+import java.io.IOException;
+
 public class SmartHomeServer extends AbstractServer {
 
     /**
@@ -14,6 +16,11 @@ public class SmartHomeServer extends AbstractServer {
 
     @Override
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-
+        System.out.println("recived message from client");
+        try {
+            this.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
