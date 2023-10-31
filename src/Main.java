@@ -4,13 +4,31 @@ import java.io.IOException;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        String msg;
         SmartHomeServer s = new SmartHomeServer(19920);
         try {
             s.listen();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        //get input from user from console
+        while(!s.isClosed()) {
+            msg = scanner.nextLine();
+            if(!msg.equals("/close")){
+                s.sendToAllClients(msg);
+            }else{
+                s.sendToAllClients("/close");
+                try {
+                    s.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            }
+        }
+
 
     }
 }
