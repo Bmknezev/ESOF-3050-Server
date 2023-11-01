@@ -1,33 +1,23 @@
 import java.io.IOException;
+import java.util.concurrent.BlockingDeque;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
+        BlockingDeque<Object> q = new java.util.concurrent.LinkedBlockingDeque<>();
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         String msg;
-        SmartHomeServer s = new SmartHomeServer(19920);
+        SmartHomeServer s = new SmartHomeServer(19920, q);
+        Test t = new Test(q);
         try {
             s.listen();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        new Thread(t).start();
 
-        //get input from user from console
-        while(!s.isClosed()) {
-            msg = scanner.nextLine();
-            if(!msg.equals("/close")){
-                s.sendToAllClients(msg);
-            }else{
-                s.sendToAllClients("/close");
-                try {
-                    s.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            }
-        }
+
+
+
 
 
     }

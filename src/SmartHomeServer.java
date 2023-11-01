@@ -3,32 +3,31 @@ import com.lloseng.ocsf.server.ConnectionToClient;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.BlockingDeque;
 
 public class SmartHomeServer extends AbstractServer {
-
+    BlockingDeque<Object> q;
     /**
      * Constructs a new server.
      *
      * @param port the port number on which to listen.
      */
-    public SmartHomeServer(int port) {
+    public SmartHomeServer(int port, BlockingDeque<Object> q) {
         super(port);
+        this.q = q;
     }
 
     @Override
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-        String message = msg.toString();
-        if(!Objects.equals(message, "/close")){
-            System.out.println(message);
-        }else{
-          System.out.println("client disconnected");
-                try {
-                    this.stopListening();
-                    this.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+        System.out.println("Message received: " + msg.toString() + " from " + client);
 
-            }
+        try {
+            q.put(msg);
+        }catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
+
+
+
 }
