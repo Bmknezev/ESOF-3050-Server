@@ -3,9 +3,11 @@ package smartDevice;
 import java.io.Serializable;
 
 public abstract class SmartDevice implements Serializable {
-    private boolean connectionStatus;
-    private int battery;
-    private boolean status;
+    private boolean connectionStatus; //device connected to network
+    private int battery; //battery level
+
+    private boolean status; //device ready to use
+
 
     public SmartDevice(boolean connectionStatus, int battery, boolean status){
         this.connectionStatus = connectionStatus;

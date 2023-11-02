@@ -1,11 +1,11 @@
 package smartDevice;
-public class smartThermostat extends SmartDevice{
-    private float temperature;
-    private float setpoint;
-    private boolean heatEnabled;
-    private boolean coolEnabled;
+public class SmartThermostat extends SmartDevice{
+    private float temperature; //the current temperature
+    private float setpoint; //the temperature the thermostat is set to
+    private boolean heatEnabled; //if true, heat is enabled
+    private boolean coolEnabled; //if true, cool is enabled
 
-    public smartThermostat(boolean connectionStatus, int battery, boolean status, float temperature, float setpoint, boolean heatEnabled, boolean coolEnabled){
+    public SmartThermostat(boolean connectionStatus, int battery, boolean status, float temperature, float setpoint, boolean heatEnabled, boolean coolEnabled){
         super(connectionStatus, battery, status);
         this.temperature = temperature;
         this.setpoint = setpoint;
