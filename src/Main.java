@@ -18,6 +18,6 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        new Thread(t).start();
+
     }
 }
