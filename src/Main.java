@@ -12,7 +12,6 @@ public class Main {
         SmartHomeServer s = new SmartHomeServer(19920, q);
         s.newDevice(l);
 
-        Test t = new Test(q);
         try {
             s.listen();
         } catch (IOException e) {

@@ -27,9 +27,7 @@ public class SmartHomeServer extends AbstractServer {
             int i = Integer.parseInt(msg.toString());
             System.out.println(devices.size());
             Object message = devices.get(i-1);
-            client.sendToClient("incoming message");
             client.sendToClient(message);
-            client.sendToClient("end of message");
             System.out.println("Message sent");
 
             //client.sendToClient(1);

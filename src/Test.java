@@ -8,9 +8,8 @@ public class Test implements Runnable{
     }
     @Override
     public void run() {
-        boolean running = true;
         Object o;
-        while(running) {
+        while(true) {
             if(!q.isEmpty()) {
                 try {
                     o = q.take();
