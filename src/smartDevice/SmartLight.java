@@ -41,7 +41,7 @@ public class SmartLight extends SmartDevice{
     }
 
     public String toString(){
-        return super.getName() + "|" + "Smart Light";
+        return super.getName() + "|" + "Smart Light" + "|" + super.getDeviceID();
     }
 
     @Override
