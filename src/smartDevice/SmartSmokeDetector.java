@@ -8,12 +8,21 @@ public class SmartSmokeDetector extends SmartDevice{
     private boolean alarmStatus; //true if alarm is ready, false if alarm is not ready
     private boolean alarm; //true if alarm is going off, false if alarm is not going off
 
-    public SmartSmokeDetector(boolean connectionStatus, int battery, boolean status){
-        super(connectionStatus, battery, status);
+    public SmartSmokeDetector(int id, String name, boolean connectionStatus, int battery, boolean status){
+        super(id, name, connectionStatus, battery, status);
         this.lastTested = new Date();
         this.testStatus = true;
         this.alarmStatus = false;
         this.alarm = false;
+    }
+
+    @Override
+    public void update(String[] s) {
+        System.out.println("Updating Smart Smoke Detector");
+        setLastTested(new Date());
+        setTestStatus(Boolean.parseBoolean(s[0]));
+        setAlarmStatus(Boolean.parseBoolean(s[1]));
+        setAlarm(Boolean.parseBoolean(s[2]));
     }
 
     public void setLastTested(Date lastTested){

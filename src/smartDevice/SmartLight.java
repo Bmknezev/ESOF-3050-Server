@@ -5,16 +5,11 @@ public class SmartLight extends SmartDevice{
     private int brightness; //brightness value from 0 to 100
     private boolean lightStatus; //true if light is on, false if light is off
 
-    private String name;
-    private int deviceID;
-
     public SmartLight(String name, int id, boolean connectionStatus, int battery, boolean status, int colour, int brightness, boolean lightStatus){
-        super(connectionStatus, battery, status);
+        super(id, name, connectionStatus, battery, status);
         this.colour = colour;
         this.brightness = brightness;
         this.lightStatus = lightStatus;
-        this.name = name;
-        this.deviceID = id;
     }
 
     public void setColour(int colour){
@@ -41,20 +36,16 @@ public class SmartLight extends SmartDevice{
         return lightStatus;
     }
 
-    public String getName(){
-        return name;
+    public String toString(){
+        return super.getDeviceID() + "@" + super.getName() + "@" + lightStatus + "@" + brightness + "@" + colour;
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public int getDeviceID(){
-        return deviceID;
-    }
-
-    public void setDeviceID(int id){
-        this.deviceID = id;
+    @Override
+    public void update(String[] s) {
+        System.out.println("Updating Smart Light");
+        setLightStatus(Boolean.parseBoolean(s[0]));
+        setBrightness(Integer.parseInt(s[1]));
+        setColour(Integer.parseInt(s[2]));
     }
 
 

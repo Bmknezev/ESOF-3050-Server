@@ -8,8 +8,8 @@ public class SmartGarageDoor extends SmartDevice{
     private int password; //password to open door
     private int passwordAttempts; //number of times password has been entered incorrectly
 
-    public SmartGarageDoor(boolean connectionStatus, int battery, boolean status, boolean safteySwitch, boolean doorStatus, boolean moving){
-        super(connectionStatus, battery, status);
+    public SmartGarageDoor(int id, String name, boolean connectionStatus, int battery, boolean status, boolean safteySwitch, boolean doorStatus, boolean moving){
+        super(id, name,connectionStatus, battery, status);
         this.safteySwitch = safteySwitch;
         this.doorStatus = doorStatus;
         this.moving = moving;
@@ -75,4 +75,12 @@ public class SmartGarageDoor extends SmartDevice{
         System.out.println("ALERT: Someone is trying to break into your house!");
     }
 
+    @Override
+    public void update(String[] s) {
+        System.out.println("Updating Smart Garage Door");
+        setSafteySwitch(Boolean.parseBoolean(s[0]));
+        setDoorStatus(Boolean.parseBoolean(s[1]));
+        setMoving(Boolean.parseBoolean(s[2]));
+        setUsePassword(Boolean.parseBoolean(s[3]), Integer.parseInt(s[4]));
+    }
 }
