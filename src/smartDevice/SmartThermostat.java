@@ -48,17 +48,41 @@ public class SmartThermostat extends SmartDevice{
 
     @Override
     public void update(String[] s) {
-        System.out.println("Updating Smart Thermostat");
-        setTemperature(Float.parseFloat(s[0]));
-        setSetpoint(Float.parseFloat(s[1]));
-        setHeatEnabled(Boolean.parseBoolean(s[2]));
-        setCoolEnabled(Boolean.parseBoolean(s[3]));
+        for(int i = 0; i < s.length; i+= 2){
+            switch (s[i]) {
+                case "temperature":
+                    System.out.println("Updating Smart Thermostat");
+                    setTemperature(Float.parseFloat(s[i+1]));
+                    break;
+                case "setpoint":
+                    System.out.println("Updating setpoint");
+                    setSetpoint(Float.parseFloat(s[i+1]));
+                    break;
+                case "heatEnabled":
+                    System.out.println("Updating heatEnabled");
+                    setHeatEnabled(Boolean.parseBoolean(s[i+1]));
+                    break;
+                case "coolEnabled":
+                    System.out.println("Updating coolEnabled");
+                    setCoolEnabled(Boolean.parseBoolean(s[i+1]));
+                    break;
+            }
+        }
     }
 
     @Override
     public String getDetails() {
-
-        return super.getDeviceID() + "|" + getTemperature() + "|" + getSetpoint() + "|" + getHeatEnabled() + "|" + getCoolEnabled();
+        String mode;
+        if(heatEnabled && temperature < setpoint){
+            mode = "heating";
+        }
+        else if(coolEnabled && temperature > setpoint){
+            mode = "cooling";
+        }
+        else{
+            mode = "off";
+        }
+        return super.getDeviceID() + "|" + super.getName() + "|" + getTemperature() + "|" + getSetpoint() + "|" + mode;
     }
 
     public String toString(){

@@ -50,10 +50,22 @@ public class SmartLock extends SmartDevice{
 
     @Override
     public void update(String[] s) {
-        System.out.println("Updating Smart Lock");
-        setLockStatus(Boolean.parseBoolean(s[0]));
-        setPassword(Integer.parseInt(s[1]));
-        setTimer(Integer.parseInt(s[2]));
+        for (int i = 0; i < s.length; i+=2){
+            switch (s[i]){
+                case "lockStatus":
+                    System.out.println("Updating Smart Lock");
+                    setLockStatus(Boolean.parseBoolean(s[i+1]));
+                    break;
+                case "password":
+                    System.out.println("Updating password");
+                    setPassword(Integer.parseInt(s[i+1]));
+                    break;
+                case "timer":
+                    System.out.println("Updating timer");
+                    setTimer(Integer.parseInt(s[i+1]));
+                    break;
+            }
+        }
     }
 
     @Override
