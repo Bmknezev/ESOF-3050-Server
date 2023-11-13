@@ -43,10 +43,12 @@ public class SmartHomeServer extends AbstractServer {
 
     private void sendToDevice(String s, ConnectionToClient client) {
         System.out.println("Sending to device: " + s);
+        //if deviceID is -1, send all devices, used for initial client connection
         if(s.equals("-1")){
             //send list of devices
             String message = "1@";
             for (Object device : devices) {
+                //concatenate all devices into one string, delimited by ~
                 message += device.toString() + "~";
             }
             try {
@@ -56,6 +58,7 @@ public class SmartHomeServer extends AbstractServer {
                 throw new RuntimeException(e);
             }
         }else {
+            //if deviceID is not -1, only send one device specified by deviceID
             try {
                 //get device from list
                 Object device = devices.get(Integer.parseInt(s) - 1);

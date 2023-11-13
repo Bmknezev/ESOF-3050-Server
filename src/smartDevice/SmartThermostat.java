@@ -48,6 +48,7 @@ public class SmartThermostat extends SmartDevice{
 
     @Override
     public void update(String[] s) {
+        //using the string recieved from the client, update each value
         for(int i = 0; i < s.length; i+= 2){
             switch (s[i]) {
                 case "temperature":
@@ -72,6 +73,7 @@ public class SmartThermostat extends SmartDevice{
 
     @Override
     public String getDetails() {
+        //calculating mode before sending to client
         String mode;
         if(heatEnabled && temperature < setpoint){
             mode = "heating";
