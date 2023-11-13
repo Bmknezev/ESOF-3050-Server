@@ -9,7 +9,7 @@ public class SmartCoffeeMachine extends SmartDevice{
     private boolean readyToBrew; //true if ready to brew, false if not ready to brew
     private boolean brewing; //true if brewing, false if not brewing
 
-    public SmartCoffeeMachine(int id, String name, boolean connectionStatus, int battery, boolean status){
+    public SmartCoffeeMachine(String name, int id, boolean connectionStatus, int battery, boolean status){
         super(id, name, connectionStatus, battery, status);
         this.cupStatus = false;
         this.waterLevel = 0;
@@ -34,9 +34,12 @@ public class SmartCoffeeMachine extends SmartDevice{
 
     @Override
     public String getDetails() {
-        return null;
+        return super.getDeviceID() + "|" + super.getDeviceID() + "|" + super.getConnectionStatus() + "|" + super.getBattery() + "|" + super.getStatus() + "|" + getCupStatus() + "|" + getWaterLevel() + "|" + getCoffeeLevel() + "|" + getTimer() + "|" + getCoffeeType() + "|" + getReadyToBrew() + "|" + getBrewing();
     }
 
+    public String toString(){
+        return super.getName() + "|" + "Smart Coffee Machine" + "|" + super.getDeviceID();
+    }
     public void setCupStatus(boolean cupStatus){
         this.cupStatus = cupStatus;
     }

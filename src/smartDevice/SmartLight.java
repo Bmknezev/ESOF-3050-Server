@@ -65,15 +65,6 @@ public class SmartLight extends SmartDevice{
                     break;
             }
         }
-
-
-
-
-
-        //System.out.println("Updating Smart Light");
-        //setLightStatus(Boolean.parseBoolean(s[0]));
-        //setBrightness(Integer.parseInt(s[1]));
-        //setColour(Integer.parseInt(s[2]));
     }
 
 

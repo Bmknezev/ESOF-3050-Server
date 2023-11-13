@@ -27,7 +27,11 @@ public class SmartSmokeDetector extends SmartDevice{
 
     @Override
     public String getDetails() {
-        return null;
+        return  super.getDeviceID() + "~" + getTestStatus() + "~" + getAlarmStatus() + "~" + getAlarm();
+    }
+
+    public String toString(){
+        return super.getName() + "|" + "Smart Smoke Detector" + "|" + super.getDeviceID();
     }
 
     public void setLastTested(Date lastTested){

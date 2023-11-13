@@ -86,6 +86,10 @@ public class SmartGarageDoor extends SmartDevice{
 
     @Override
     public String getDetails() {
-        return null;
+        return super.getDeviceID() + "|" + super.getName() + "|" + safteySwitch + "|" + doorStatus + "|" + moving + "|" + usePassword + "|" + password;
+    }
+
+    public String toString(){
+        return super.getName() + "|" + "Smart Garage Door" + "|" + super.getDeviceID();
     }
 }
