@@ -42,10 +42,34 @@ public class SmartLight extends SmartDevice{
 
     @Override
     public void update(String[] s) {
-        System.out.println("Updating Smart Light");
-        setLightStatus(Boolean.parseBoolean(s[0]));
-        setBrightness(Integer.parseInt(s[1]));
-        setColour(Integer.parseInt(s[2]));
+
+        for(int i = 0; i < s.length; i+= 2){
+
+            switch (s[i]) {
+                case "lightStatus":
+                    System.out.println("Updating Smart Light");
+                    setLightStatus(Boolean.parseBoolean(s[i+1]));
+                    break;
+                case "brightness":
+                    System.out.println("Updating brightness");
+                    setBrightness(Integer.parseInt(s[i+1]));
+                    break;
+                case "colour":
+                    setColour(Integer.parseInt(s[i+1]));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+
+
+
+        //System.out.println("Updating Smart Light");
+        //setLightStatus(Boolean.parseBoolean(s[0]));
+        //setBrightness(Integer.parseInt(s[1]));
+        //setColour(Integer.parseInt(s[2]));
     }
 
 
