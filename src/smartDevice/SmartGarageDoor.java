@@ -83,4 +83,9 @@ public class SmartGarageDoor extends SmartDevice{
         setMoving(Boolean.parseBoolean(s[2]));
         setUsePassword(Boolean.parseBoolean(s[3]), Integer.parseInt(s[4]));
     }
+
+    @Override
+    public String getDetails() {
+        return null;
+    }
 }

@@ -43,13 +43,27 @@ public class SmartHomeServer extends AbstractServer {
 
     private void sendToDevice(String s, ConnectionToClient client) {
         System.out.println("Sending to device: " + s);
-        try {
-            //get device from list
-            Object device = devices.get(Integer.parseInt(s)-1);
-            client.sendToClient(device.toString());
-        } catch (IOException e) {
-            System.out.println("Error sending message to client.");
-            throw new RuntimeException(e);
+        if(s.equals("-1")){
+            //send list of devices
+            String message = "1@";
+            for (Object device : devices) {
+                message += device.toString() + "~";
+            }
+            try {
+                client.sendToClient(message);
+            } catch (IOException e) {
+                System.out.println("Error sending message to client.");
+                throw new RuntimeException(e);
+            }
+        }else {
+            try {
+                //get device from list
+                Object device = devices.get(Integer.parseInt(s) - 1);
+                client.sendToClient(0+"@"+((SmartDevice) device).getDetails());
+            } catch (IOException e) {
+                System.out.println("Error sending message to client.");
+                throw new RuntimeException(e);
+            }
         }
     }
 

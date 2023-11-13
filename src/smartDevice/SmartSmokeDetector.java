@@ -25,6 +25,11 @@ public class SmartSmokeDetector extends SmartDevice{
         setAlarm(Boolean.parseBoolean(s[2]));
     }
 
+    @Override
+    public String getDetails() {
+        return null;
+    }
+
     public void setLastTested(Date lastTested){
         this.lastTested = lastTested;
     }

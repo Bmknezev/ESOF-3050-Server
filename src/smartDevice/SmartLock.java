@@ -55,4 +55,9 @@ public class SmartLock extends SmartDevice{
         setPassword(Integer.parseInt(s[1]));
         setTimer(Integer.parseInt(s[2]));
     }
+
+    @Override
+    public String getDetails() {
+        return null;
+    }
 }

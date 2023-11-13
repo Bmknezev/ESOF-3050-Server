@@ -32,6 +32,11 @@ public class SmartCoffeeMachine extends SmartDevice{
         setBrewing(Boolean.parseBoolean(s[6]));
     }
 
+    @Override
+    public String getDetails() {
+        return null;
+    }
+
     public void setCupStatus(boolean cupStatus){
         this.cupStatus = cupStatus;
     }

@@ -54,4 +54,9 @@ public class SmartThermostat extends SmartDevice{
         setHeatEnabled(Boolean.parseBoolean(s[2]));
         setCoolEnabled(Boolean.parseBoolean(s[3]));
     }
+
+    @Override
+    public String getDetails() {
+        return null;
+    }
 }

@@ -36,8 +36,12 @@ public class SmartLight extends SmartDevice{
         return lightStatus;
     }
 
+    public String getDetails(){
+        return super.getDeviceID() + "|" + super.getName() + "|" + lightStatus + "|" + brightness + "|" + colour;
+    }
+
     public String toString(){
-        return super.getDeviceID() + "@" + super.getName() + "@" + lightStatus + "@" + brightness + "@" + colour;
+        return super.getName() + "|" + "Smart Light";
     }
 
     @Override

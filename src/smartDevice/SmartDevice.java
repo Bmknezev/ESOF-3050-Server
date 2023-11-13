@@ -65,6 +65,8 @@ public abstract class SmartDevice implements Serializable {
 
     public abstract void update(String[] s);
 
+    public abstract String getDetails();
+
 
 
 
