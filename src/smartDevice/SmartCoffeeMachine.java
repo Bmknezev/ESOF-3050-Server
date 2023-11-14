@@ -34,7 +34,7 @@ public class SmartCoffeeMachine extends SmartDevice{
 
     @Override
     public String getDetails() {
-        return super.getDeviceID() + "|" + super.getDeviceID() + "|" + super.getConnectionStatus() + "|" + super.getBattery() + "|" + super.getStatus() + "|" + getCupStatus() + "|" + getWaterLevel() + "|" + getCoffeeLevel() + "|" + getTimer() + "|" + getCoffeeType() + "|" + getReadyToBrew() + "|" + getBrewing();
+        return super.getDeviceID() + "|" + super.getName() + "|" + getCupStatus() + "|" + getWaterLevel() + "|" + getCoffeeLevel() + "|" + getCoffeeType() + "|" + getReadyToBrew() + "|" + getBrewing();
     }
 
     public String toString(){

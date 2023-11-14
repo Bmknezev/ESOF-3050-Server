@@ -8,7 +8,7 @@ public class SmartGarageDoor extends SmartDevice{
     private int password; //password to open door
     private int passwordAttempts; //number of times password has been entered incorrectly
 
-    public SmartGarageDoor(int id, String name, boolean connectionStatus, int battery, boolean status, boolean safteySwitch, boolean doorStatus, boolean moving){
+    public SmartGarageDoor(String name, int id, boolean connectionStatus, int battery, boolean status, boolean safteySwitch, boolean doorStatus, boolean moving){
         super(id, name,connectionStatus, battery, status);
         this.safteySwitch = safteySwitch;
         this.doorStatus = doorStatus;

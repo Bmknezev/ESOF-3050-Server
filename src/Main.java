@@ -1,6 +1,4 @@
-import smartDevice.SmartLight;
-import smartDevice.SmartLock;
-import smartDevice.SmartThermostat;
+import smartDevice.*;
 
 import java.io.IOException;
 
@@ -13,7 +11,13 @@ public class Main {
 
         SmartLock lock = new SmartLock("lock 1", 3,true, -1,true, true);
 
-        SmartThermostat thermostat = new SmartThermostat("Thermostat 1" , 4,true, -1,true, 20, 20, true, false);
+        SmartThermostat thermostat = new SmartThermostat("Thermostat 1" , 4,true, 20,true, 20, 20, true, false);
+
+        SmartCoffeeMachine coffeeMachine = new SmartCoffeeMachine("Coffee Machine 1", 5, true, -1, true);
+
+        SmartGarageDoor garageDoor = new SmartGarageDoor("Garage Door 1", 6, true, -1, true, true, true, true);
+
+        SmartSmokeDetector smokeDetector = new SmartSmokeDetector("Smoke Detector 1", 7, true, -1, true);
 
         //starting server and adding the devices
         SmartHomeServer s = new SmartHomeServer(19920);
@@ -21,6 +25,10 @@ public class Main {
         s.newDevice(l2);
         s.newDevice(lock);
         s.newDevice(thermostat);
+        s.newDevice(coffeeMachine);
+        s.newDevice(garageDoor);
+        s.newDevice(smokeDetector);
+
 
         try {
             s.listen();
