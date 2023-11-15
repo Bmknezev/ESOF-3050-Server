@@ -161,4 +161,9 @@ public class SmartCoffeeMachine extends SmartDevice{
     public Object PrepareMessage() {
         return new CoffeeMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getCupStatus(), getWaterLevel(), getCoffeeBeanLevel(), getTimer(), getCoffeeType(), getReadyToBrew(), getBrewing(), getCoffeeLevel());
     }
+
+    @Override
+    public String getType() {
+        return "Smart Coffee Machine";
+    }
 }

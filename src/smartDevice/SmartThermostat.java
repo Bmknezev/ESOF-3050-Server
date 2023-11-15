@@ -8,6 +8,7 @@ public class SmartThermostat extends SmartDevice{
     private float setpoint; //the temperature the thermostat is set to
     private boolean heatEnabled; //if true, heat is enabled
     private boolean coolEnabled; //if true, cool is enabled
+    private Boolean mode; //the mode the thermostat is in (heat, cool, off)
 
     public SmartThermostat(String name, int id, boolean connectionStatus, int battery, boolean status, float temperature, float setpoint, boolean heatEnabled, boolean coolEnabled){
         super(id, name, connectionStatus, battery, status);
@@ -62,7 +63,13 @@ public class SmartThermostat extends SmartDevice{
 
     @Override
     public Object PrepareMessage() {
-        return new ThermostatMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), temperature, setpoint, heatEnabled, coolEnabled);
+        mode = true;
+        return new ThermostatMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), temperature, setpoint, heatEnabled, coolEnabled, mode);
+    }
+
+    @Override
+    public String getType() {
+        return "Smart Thermostat";
     }
 
 }

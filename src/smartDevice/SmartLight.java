@@ -53,4 +53,9 @@ public class SmartLight extends SmartDevice{
     public Object PrepareMessage() {
         return new LightMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getColour(), (int) getBrightness(), getLightStatus());
     }
+
+    @Override
+    public String getType() {
+        return "Smart Light";
+    }
 }

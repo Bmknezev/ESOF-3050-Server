@@ -64,4 +64,9 @@ public class SmartSmokeDetector extends SmartDevice{
     public Object PrepareMessage() {
         return new SmokeDetectorMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getLastTested(), getTestStatus(), getAlarmStatus(), getAlarm());
     }
+
+    @Override
+    public String getType() {
+        return "Smart Smoke Detector";
+    }
 }

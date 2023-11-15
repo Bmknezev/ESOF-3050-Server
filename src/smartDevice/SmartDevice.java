@@ -70,4 +70,6 @@ public abstract class SmartDevice implements Serializable {
 
 
     public abstract Object PrepareMessage();
+
+    public abstract String getType();
 }

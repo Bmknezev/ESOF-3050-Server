@@ -2,6 +2,7 @@ import com.lloseng.ocsf.server.AbstractServer;
 import com.lloseng.ocsf.server.ConnectionToClient;
 import messages.AbstractDeviceMessage;
 import messages.AbstractMessage;
+import messages.NewDeviceMessage;
 import smartDevice.*;
 import java.io.IOException;
 import java.util.List;
@@ -39,6 +40,17 @@ public class SmartHomeServer extends AbstractServer {
                 System.out.println("Error sending message to client.");
                 throw new RuntimeException(e);
             }
+            //send list of devices to client
+            for (SmartDevice device : devices) {
+                try {
+                    NewDeviceMessage message = new NewDeviceMessage(true, device.getDeviceID(), device.getName(),device.getType());
+                    client.sendToClient(message);
+                } catch (IOException e) {
+                    System.out.println("Error sending message to client.");
+                    throw new RuntimeException(e);
+                }
+            }
+
         }else if(((AbstractMessage)msg).getMessageType()){
             //if message is request
             sendToDevice((AbstractDeviceMessage)msg, client);

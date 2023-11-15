@@ -1,6 +1,6 @@
 package messages;
 
-public abstract class AbstractMessage {
+public abstract class AbstractMessage implements java.io.Serializable{
     private boolean request; //true for request, false for response
     private boolean startup = false; //true for startup, false for normal operation
 
@@ -20,5 +20,9 @@ public abstract class AbstractMessage {
 
     public boolean getStartup(){
         return startup;
+    }
+
+    public void setStartup(boolean startup){
+        this.startup = startup;
     }
 }

@@ -66,4 +66,9 @@ public class SmartLock extends SmartDevice{
     public Object PrepareMessage() {
         return new LockMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getLockStatus(), getPassword(), getTimer());
     }
+
+    @Override
+    public String getType() {
+        return "Smart Lock";
+    }
 }

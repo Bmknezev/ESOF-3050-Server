@@ -93,4 +93,9 @@ public class SmartGarageDoor extends SmartDevice{
     public Object PrepareMessage() {
         return new GarageDoorMessage(true, super.getDeviceID(), super.getName(), super.getConnectionStatus(), super.getBattery(), super.getStatus(), safteySwitch, doorStatus, moving, usePassword, password, passwordAttempts);
     }
+
+    @Override
+    public String getType() {
+        return "Smart Garage Door";
+    }
 }
