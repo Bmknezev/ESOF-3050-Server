@@ -1,7 +1,7 @@
 package smartDevice;
 
 import messages.AbstractDeviceMessage;
-import messages.SmokeDetectorMessage;
+import messages.server.SmokeDetectorMessage;
 
 import java.util.Date;
 
@@ -58,11 +58,10 @@ public class SmartSmokeDetector extends SmartDevice{
         setLastTested(message.getLastTested());
         setTestStatus(message.getTestStatus());
         setAlarmStatus(message.getAlarmStatus());
-        setAlarm(message.getAlarm());
     }
     @Override
     public Object PrepareMessage() {
-        return new SmokeDetectorMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getLastTested(), getTestStatus(), getAlarmStatus(), getAlarm());
+        return new SmokeDetectorMessage(getDeviceID(), getName(), getLastTested(), getTestStatus(), getAlarmStatus());
     }
 
     @Override

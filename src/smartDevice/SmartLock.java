@@ -1,7 +1,7 @@
 package smartDevice;
 
 import messages.AbstractDeviceMessage;
-import messages.LockMessage;
+import messages.server.LockMessage;
 
 public class SmartLock extends SmartDevice{
     private boolean lockStatus; //true = locked, false = unlocked
@@ -56,15 +56,15 @@ public class SmartLock extends SmartDevice{
     public void update(AbstractDeviceMessage msg) {
         LockMessage message = (LockMessage) msg;
         super.update(msg);
-        this.lockStatus = ((messages.LockMessage)message).getLockStatus();
-        this.password = ((messages.LockMessage)message).getPassword();
-        this.timer = ((messages.LockMessage)message).getTimer();
+        this.lockStatus = ((LockMessage)message).getLockStatus();
+        this.password = ((LockMessage)message).getPassword();
+        this.timer = ((LockMessage)message).getTimer();
 
     }
 
     @Override
     public Object PrepareMessage() {
-        return new LockMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getLockStatus(), getPassword(), getTimer());
+        return new LockMessage(getDeviceID(), getName(), getLockStatus(), getPassword(), getTimer());
     }
 
     @Override

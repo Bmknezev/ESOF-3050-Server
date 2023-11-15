@@ -62,9 +62,6 @@ public abstract class SmartDevice implements Serializable {
     }
 
     public void update(AbstractDeviceMessage msg){
-        this.connectionStatus = msg.getConnectionStatus();
-        this.battery = msg.getBattery();
-        this.status = msg.getStatus();
         this.name = msg.getName();
     }
 
