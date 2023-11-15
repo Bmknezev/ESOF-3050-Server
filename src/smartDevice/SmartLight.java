@@ -1,7 +1,7 @@
 package smartDevice;
 
 import messages.AbstractDeviceMessage;
-import messages.LightMessage;
+import messages.server.LightMessage;
 
 public class SmartLight extends SmartDevice{
     private int colour; //hexadecimal colour value (e.g. 0x000000 is black, 0xFFFFFF is white)
@@ -51,7 +51,7 @@ public class SmartLight extends SmartDevice{
 
     @Override
     public Object PrepareMessage() {
-        return new LightMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getColour(), (int) getBrightness(), getLightStatus());
+        return new LightMessage(getDeviceID(), getName(), getColour(), (int) getBrightness(), getLightStatus());
     }
 
     @Override

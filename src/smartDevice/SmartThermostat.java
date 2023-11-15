@@ -1,7 +1,7 @@
 package smartDevice;
 
 import messages.AbstractDeviceMessage;
-import messages.ThermostatMessage;
+import messages.server.ThermostatMessage;
 
 public class SmartThermostat extends SmartDevice{
     private float temperature; //the current temperature
@@ -64,7 +64,7 @@ public class SmartThermostat extends SmartDevice{
     @Override
     public Object PrepareMessage() {
         mode = true;
-        return new ThermostatMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), temperature, setpoint, heatEnabled, coolEnabled, mode);
+        return new ThermostatMessage(getDeviceID(), getName(), temperature, setpoint, heatEnabled, coolEnabled, mode);
     }
 
     @Override

@@ -2,7 +2,7 @@ package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
-import messages.CoffeeMessage;
+import messages.server.CoffeeMessage;
 
 public class SmartCoffeeMachine extends SmartDevice{
     private boolean cupStatus; //true if cup is in place, false if cup is not in place
@@ -34,10 +34,8 @@ public class SmartCoffeeMachine extends SmartDevice{
         this.cupStatus = message.getCupStatus();
         this.waterLevel = message.getWaterLevel();
         this.coffeeBeanLevel = message.getCoffeeBeanLevel();
-        this.timer = message.getTimer();
         this.coffeeType = message.getCoffeeType();
         this.readyToBrew = message.getReadyToBrew();
-        this.brewing = message.getBrewing();
         this.coffeeLevel = message.getCoffeeLevel();
     }
 
@@ -159,7 +157,7 @@ public class SmartCoffeeMachine extends SmartDevice{
 
     @Override
     public Object PrepareMessage() {
-        return new CoffeeMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getCupStatus(), getWaterLevel(), getCoffeeBeanLevel(), getTimer(), getCoffeeType(), getReadyToBrew(), getBrewing(), getCoffeeLevel());
+        return new CoffeeMessage(getDeviceID(), getName(), getCupStatus(), getWaterLevel(), getCoffeeBeanLevel(), getCoffeeType(), getReadyToBrew(), getCoffeeLevel());
     }
 
     @Override

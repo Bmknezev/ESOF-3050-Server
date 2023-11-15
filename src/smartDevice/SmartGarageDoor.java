@@ -1,7 +1,7 @@
 package smartDevice;
 
 import messages.AbstractDeviceMessage;
-import messages.GarageDoorMessage;
+import messages.server.GarageDoorMessage;
 
 public class SmartGarageDoor extends SmartDevice{
     private boolean safteySwitch; //true if object is detected under door, false if no object is detected
@@ -91,7 +91,7 @@ public class SmartGarageDoor extends SmartDevice{
 
     @Override
     public Object PrepareMessage() {
-        return new GarageDoorMessage(true, super.getDeviceID(), super.getName(), super.getConnectionStatus(), super.getBattery(), super.getStatus(), safteySwitch, doorStatus, moving, usePassword, password, passwordAttempts);
+        return new GarageDoorMessage(getDeviceID(), getName(), getSafteySwitch(), getDoorStatus(), getMoving(), getUsePassword(), getPassword(), passwordAttempts);
     }
 
     @Override
