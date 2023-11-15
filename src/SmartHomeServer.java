@@ -1,48 +1,77 @@
 import com.lloseng.ocsf.server.AbstractServer;
 import com.lloseng.ocsf.server.ConnectionToClient;
-
+import smartDevice.*;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
+
 
 public class SmartHomeServer extends AbstractServer {
-    BlockingDeque<Object> q;
     List<Object> devices = new java.util.ArrayList<>();
     /**
      * Constructs a new server.
      *
      * @param port the port number on which to listen.
      */
-    public SmartHomeServer(int port, BlockingDeque<Object> q) {
+    public SmartHomeServer(int port) {
         super(port);
-        this.q = q;
     }
 
     @Override
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-        System.out.println("Message received: " + msg.toString() + " from " + client);
-
-        try {
-
-            int i = Integer.parseInt(msg.toString());
-            System.out.println(devices.size());
-            Object message = devices.get(i-1);
-            client.sendToClient("incoming message");
-            client.sendToClient(message);
-            client.sendToClient("end of message");
-            System.out.println("Message sent");
-
-            //client.sendToClient(1);
-
-        } catch (IOException e) {
-            System.out.println("Error sending message to client.");
-            throw new RuntimeException(e);
+        //message format:    send/receive@deviceID@message(if receive, delimit with |)
+        String[] s = msg.toString().split("@");
+        if(Boolean.parseBoolean(s[0])){
+            //send
+            sendToDevice(s[1], client);
         }
+        else{
+            //receive
+            receiveFromDevice(s[1], s[2]);
+        }
+    }
+
+    private void receiveFromDevice(String s, String s1) {
+        System.out.println(s1);
+        String[] updates = s1.split("\\|");
+        //get device from list
+        Object device = devices.get(Integer.parseInt(s)-1);
+        //update device
+        ((SmartDevice)device).update(updates);
+        System.out.println("Updated device: " + device);
 
     }
 
-public void newDevice(Object device){
+    private void sendToDevice(String s, ConnectionToClient client) {
+        System.out.println("Sending to device: " + s);
+        //if deviceID is -1, send all devices, used for initial client connection
+        if(s.equals("-1")){
+            //send list of devices
+            String message = "1@";
+            for (Object device : devices) {
+                //concatenate all devices into one string, delimited by ~
+                message += device.toString() + "~";
+            }
+            try {
+                client.sendToClient(message);
+            } catch (IOException e) {
+                System.out.println("Error sending message to client.");
+                throw new RuntimeException(e);
+            }
+        }else {
+            //if deviceID is not -1, only send one device specified by deviceID
+            try {
+                //get device from list
+                Object device = devices.get(Integer.parseInt(s) - 1);
+                client.sendToClient(0+"@"+((SmartDevice) device).getDetails());
+            } catch (IOException e) {
+                System.out.println("Error sending message to client.");
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void newDevice(Object device){
         devices.add(device);
-}
+    }
 
 }

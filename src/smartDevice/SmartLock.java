@@ -5,8 +5,8 @@ public class SmartLock extends SmartDevice{
     private int password; //password to unlock the door
     private int timer; //timer to lock the door after a certain amount of time
 
-    public SmartLock(boolean connectionStatus, int battery, boolean status, boolean lockStatus){
-        super(connectionStatus, battery, status);
+    public SmartLock(String name, int id, boolean connectionStatus, int battery, boolean status, boolean lockStatus){
+        super(id, name, connectionStatus, battery, status);
         this.lockStatus = lockStatus;
     }
 
@@ -48,4 +48,32 @@ public class SmartLock extends SmartDevice{
         System.out.println("ALERT: Someone is trying to break into your house!");
     }
 
+    @Override
+    public void update(String[] s) {
+        for (int i = 0; i < s.length; i+=2){
+            switch (s[i]){
+                case "lockStatus":
+                    System.out.println("Updating Smart Lock");
+                    setLockStatus(Boolean.parseBoolean(s[i+1]));
+                    break;
+                case "password":
+                    System.out.println("Updating password");
+                    setPassword(Integer.parseInt(s[i+1]));
+                    break;
+                case "timer":
+                    System.out.println("Updating timer");
+                    setTimer(Integer.parseInt(s[i+1]));
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public String getDetails() {
+        return super.getDeviceID() + "|" + super.getName() + "|" + lockStatus + "|" + password + "|" + timer;
+    }
+
+    public String toString(){
+        return super.getName() + "|" + "Smart Lock" + "|" + super.getDeviceID();
+    }
 }
