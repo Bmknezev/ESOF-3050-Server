@@ -1,5 +1,8 @@
 package smartDevice;
 
+import messages.AbstractDeviceMessage;
+import messages.SmokeDetectorMessage;
+
 import java.util.Date;
 
 public class SmartSmokeDetector extends SmartDevice{
@@ -14,24 +17,6 @@ public class SmartSmokeDetector extends SmartDevice{
         this.testStatus = true;
         this.alarmStatus = false;
         this.alarm = false;
-    }
-
-    @Override
-    public void update(String[] s) {
-        System.out.println("Updating Smart Smoke Detector");
-        setLastTested(new Date());
-        setTestStatus(Boolean.parseBoolean(s[0]));
-        setAlarmStatus(Boolean.parseBoolean(s[1]));
-        setAlarm(Boolean.parseBoolean(s[2]));
-    }
-
-    @Override
-    public String getDetails() {
-        return  super.getDeviceID() + "|" + super.getName() +"|" + getAlarmStatus() + "|" + getTestStatus() + "|" + getAlarm() + "|" +super.getBattery() + "|" + getLastTested();
-    }
-
-    public String toString(){
-        return super.getName() + "|" + "Smart Smoke Detector" + "|" + super.getDeviceID();
     }
 
     public void setLastTested(Date lastTested){
@@ -67,4 +52,16 @@ public class SmartSmokeDetector extends SmartDevice{
     }
 
 
+    public void update(AbstractDeviceMessage msg){
+        SmokeDetectorMessage message = (SmokeDetectorMessage) msg;
+        super.update(msg);
+        setLastTested(message.getLastTested());
+        setTestStatus(message.getTestStatus());
+        setAlarmStatus(message.getAlarmStatus());
+        setAlarm(message.getAlarm());
+    }
+    @Override
+    public Object PrepareMessage() {
+        return new SmokeDetectorMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getLastTested(), getTestStatus(), getAlarmStatus(), getAlarm());
+    }
 }

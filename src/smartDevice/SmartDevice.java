@@ -1,5 +1,7 @@
 package smartDevice;
 
+import messages.AbstractDeviceMessage;
+
 import java.io.Serializable;
 
 public abstract class SmartDevice implements Serializable {
@@ -59,15 +61,13 @@ public abstract class SmartDevice implements Serializable {
         this.deviceID = id;
     }
 
-    public String toString(){
-        return name + "@" + connectionStatus + "@" + battery + "@" + status;
+    public void update(AbstractDeviceMessage msg){
+        this.connectionStatus = msg.getConnectionStatus();
+        this.battery = msg.getBattery();
+        this.status = msg.getStatus();
+        this.name = msg.getName();
     }
 
-    public abstract void update(String[] s);
 
-    public abstract String getDetails();
-
-
-
-
+    public abstract Object PrepareMessage();
 }

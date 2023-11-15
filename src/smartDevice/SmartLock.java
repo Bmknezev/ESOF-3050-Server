@@ -1,5 +1,8 @@
 package smartDevice;
 
+import messages.AbstractDeviceMessage;
+import messages.LockMessage;
+
 public class SmartLock extends SmartDevice{
     private boolean lockStatus; //true = locked, false = unlocked
     private int password; //password to unlock the door
@@ -48,32 +51,19 @@ public class SmartLock extends SmartDevice{
         System.out.println("ALERT: Someone is trying to break into your house!");
     }
 
+
     @Override
-    public void update(String[] s) {
-        for (int i = 0; i < s.length; i+=2){
-            switch (s[i]){
-                case "lockStatus":
-                    System.out.println("Updating Smart Lock");
-                    setLockStatus(Boolean.parseBoolean(s[i+1]));
-                    break;
-                case "password":
-                    System.out.println("Updating password");
-                    setPassword(Integer.parseInt(s[i+1]));
-                    break;
-                case "timer":
-                    System.out.println("Updating timer");
-                    setTimer(Integer.parseInt(s[i+1]));
-                    break;
-            }
-        }
+    public void update(AbstractDeviceMessage msg) {
+        LockMessage message = (LockMessage) msg;
+        super.update(msg);
+        this.lockStatus = ((messages.LockMessage)message).getLockStatus();
+        this.password = ((messages.LockMessage)message).getPassword();
+        this.timer = ((messages.LockMessage)message).getTimer();
+
     }
 
     @Override
-    public String getDetails() {
-        return super.getDeviceID() + "|" + super.getName() + "|" + lockStatus + "|" + password + "|" + timer;
-    }
-
-    public String toString(){
-        return super.getName() + "|" + "Smart Lock" + "|" + super.getDeviceID();
+    public Object PrepareMessage() {
+        return new LockMessage(true, getDeviceID(), getName(), getConnectionStatus(), getBattery(), getStatus(), getLockStatus(), getPassword(), getTimer());
     }
 }

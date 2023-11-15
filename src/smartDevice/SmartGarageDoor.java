@@ -1,5 +1,8 @@
 package smartDevice;
 
+import messages.AbstractDeviceMessage;
+import messages.GarageDoorMessage;
+
 public class SmartGarageDoor extends SmartDevice{
     private boolean safteySwitch; //true if object is detected under door, false if no object is detected
     private boolean doorStatus; //true if door is open, false if door is closed
@@ -76,20 +79,18 @@ public class SmartGarageDoor extends SmartDevice{
     }
 
     @Override
-    public void update(String[] s) {
-        System.out.println("Updating Smart Garage Door");
-        setSafteySwitch(Boolean.parseBoolean(s[0]));
-        setDoorStatus(Boolean.parseBoolean(s[1]));
-        setMoving(Boolean.parseBoolean(s[2]));
-        setUsePassword(Boolean.parseBoolean(s[3]), Integer.parseInt(s[4]));
+    public void update(AbstractDeviceMessage msg) {
+        super.update(msg);
+        GarageDoorMessage message = (GarageDoorMessage) msg;
+        setSafteySwitch(message.getSafteySwitch());
+        setDoorStatus(message.getDoorStatus());
+        setMoving(message.getMoving());
+        setUsePassword(message.getUsePassword(), message.getPassword());
+
     }
 
     @Override
-    public String getDetails() {
-        return super.getDeviceID() + "|" + super.getName() + "|" + safteySwitch + "|" + doorStatus + "|" + moving + "|" + usePassword + "|" + password;
-    }
-
-    public String toString(){
-        return super.getName() + "|" + "Smart Garage Door" + "|" + super.getDeviceID();
+    public Object PrepareMessage() {
+        return new GarageDoorMessage(true, super.getDeviceID(), super.getName(), super.getConnectionStatus(), super.getBattery(), super.getStatus(), safteySwitch, doorStatus, moving, usePassword, password, passwordAttempts);
     }
 }
