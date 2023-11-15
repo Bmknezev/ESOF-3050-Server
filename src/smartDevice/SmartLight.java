@@ -1,5 +1,8 @@
 package smartDevice;
 
+import messages.AbstractDeviceMessage;
+import messages.server.LightMessage;
+
 public class SmartLight extends SmartDevice{
     private int colour; //hexadecimal colour value (e.g. 0x000000 is black, 0xFFFFFF is white)
     private int brightness; //brightness value from 0 to 100
@@ -36,36 +39,23 @@ public class SmartLight extends SmartDevice{
         return lightStatus;
     }
 
-    public String getDetails(){
-        return super.getDeviceID() + "|" + super.getName() + "|" + lightStatus + "|" + brightness + "|" + colour;
-    }
+    @Override
+    public void update(AbstractDeviceMessage msg) {
+        LightMessage message = (LightMessage) msg;
+        super.update(msg);
+        setColour(message.getColour());
+        setBrightness(message.getBrightness());
+        setLightStatus(message.getLightStatus());
 
-    public String toString(){
-        return super.getName() + "|" + "Smart Light" + "|" + super.getDeviceID();
     }
 
     @Override
-    public void update(String[] s) {
-
-        for(int i = 0; i < s.length; i+= 2){
-
-            switch (s[i]) {
-                case "lightStatus":
-                    System.out.println("Updating Smart Light");
-                    setLightStatus(Boolean.parseBoolean(s[i+1]));
-                    break;
-                case "brightness":
-                    System.out.println("Updating brightness");
-                    setBrightness(Integer.parseInt(s[i+1]));
-                    break;
-                case "colour":
-                    setColour(Integer.parseInt(s[i+1]));
-                    break;
-                default:
-                    break;
-            }
-        }
+    public Object PrepareMessage() {
+        return new LightMessage(getDeviceID(), getName(), getColour(), (int) getBrightness(), getLightStatus());
     }
 
-
+    @Override
+    public String getType() {
+        return "Smart Light";
+    }
 }

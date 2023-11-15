@@ -30,6 +30,11 @@ public class Main {
         s.newDevice(smokeDetector);
 
 
+        coffeeMachine.setCoffeeBeanLevel(0.5);
+        coffeeMachine.setWaterLevel(0.7);
+        coffeeMachine.setServer(s);
+
+
         try {
             s.listen();
         } catch (IOException e) {

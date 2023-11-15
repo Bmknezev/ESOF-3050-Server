@@ -1,9 +1,14 @@
 package smartDevice;
+
+import messages.AbstractDeviceMessage;
+import messages.server.ThermostatMessage;
+
 public class SmartThermostat extends SmartDevice{
     private float temperature; //the current temperature
     private float setpoint; //the temperature the thermostat is set to
     private boolean heatEnabled; //if true, heat is enabled
     private boolean coolEnabled; //if true, cool is enabled
+    private Boolean mode; //the mode the thermostat is in (heat, cool, off)
 
     public SmartThermostat(String name, int id, boolean connectionStatus, int battery, boolean status, float temperature, float setpoint, boolean heatEnabled, boolean coolEnabled){
         super(id, name, connectionStatus, battery, status);
@@ -46,48 +51,25 @@ public class SmartThermostat extends SmartDevice{
     }
 
 
-    @Override
-    public void update(String[] s) {
-        //using the string recieved from the client, update each value
-        for(int i = 0; i < s.length; i+= 2){
-            switch (s[i]) {
-                case "temperature":
-                    System.out.println("Updating Smart Thermostat");
-                    setTemperature(Float.parseFloat(s[i+1]));
-                    break;
-                case "setpoint":
-                    System.out.println("Updating setpoint");
-                    setSetpoint(Float.parseFloat(s[i+1]));
-                    break;
-                case "heatEnabled":
-                    System.out.println("Updating heatEnabled");
-                    setHeatEnabled(Boolean.parseBoolean(s[i+1]));
-                    break;
-                case "coolEnabled":
-                    System.out.println("Updating coolEnabled");
-                    setCoolEnabled(Boolean.parseBoolean(s[i+1]));
-                    break;
-            }
-        }
+
+    public void update(AbstractDeviceMessage msg) {
+        ThermostatMessage message = (ThermostatMessage) msg;
+        super.update(msg);
+        this.temperature = message.getTemperature();
+        this.setpoint = message.getSetpoint();
+        this.heatEnabled = message.getHeatEnabled();
+        this.coolEnabled = message.getCoolEnabled();
     }
 
     @Override
-    public String getDetails() {
-        //calculating mode before sending to client
-        String mode;
-        if(heatEnabled && temperature < setpoint){
-            mode = "heating";
-        }
-        else if(coolEnabled && temperature > setpoint){
-            mode = "cooling";
-        }
-        else{
-            mode = "off";
-        }
-        return super.getDeviceID() + "|" + super.getName() + "|" + getTemperature() + "|" + getSetpoint() + "|" + mode;
+    public Object PrepareMessage() {
+        mode = true;
+        return new ThermostatMessage(getDeviceID(), getName(), temperature, setpoint, heatEnabled, coolEnabled, mode);
     }
 
-    public String toString(){
-        return super.getName() + "|" + "Smart Thermostat" + "|" + super.getDeviceID();
+    @Override
+    public String getType() {
+        return "Smart Thermostat";
     }
+
 }
