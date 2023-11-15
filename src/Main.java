@@ -14,6 +14,7 @@ public class Main {
         SmartThermostat thermostat = new SmartThermostat("Thermostat 1" , 4,true, 20,true, 20, 20, true, false);
 
         SmartCoffeeMachine coffeeMachine = new SmartCoffeeMachine("Coffee Machine 1", 5, true, -1, true);
+        coffeeMachine.setCoffeeLevel(0.6);
 
         SmartGarageDoor garageDoor = new SmartGarageDoor("Garage Door 1", 6, true, -1, true, true, true, true);
 

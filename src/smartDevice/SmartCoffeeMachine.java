@@ -87,7 +87,7 @@ public class SmartCoffeeMachine extends SmartDevice{
         }
     }
 
-    private void setCoffeeLevel(double coffee) {
+    public void setCoffeeLevel(double coffee) {
         this.coffeeLevel = coffee;
     }
 
