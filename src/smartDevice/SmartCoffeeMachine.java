@@ -3,6 +3,7 @@ package smartDevice;
 import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
 import messages.server.CoffeeMessage;
+import messages.BrewCoffeeMessage;
 
 public class SmartCoffeeMachine extends SmartDevice{
     private boolean cupStatus; //true if cup is in place, false if cup is not in place
@@ -29,63 +30,82 @@ public class SmartCoffeeMachine extends SmartDevice{
 
 
     public void update(AbstractDeviceMessage msg) {
-        CoffeeMessage message = (CoffeeMessage) msg;
-        super.update(msg);
-        this.cupStatus = message.getCupStatus();
-        this.waterLevel = message.getWaterLevel();
-        this.coffeeBeanLevel = message.getCoffeeBeanLevel();
-        this.coffeeType = message.getCoffeeType();
-        this.readyToBrew = message.getReadyToBrew();
-        this.coffeeLevel = message.getCoffeeLevel();
+
+        if(msg instanceof CoffeeMessage) {
+            CoffeeMessage message = (CoffeeMessage) msg;
+            super.update(msg);
+            this.cupStatus = message.getCupStatus();
+            this.waterLevel = message.getWaterLevel();
+            this.coffeeBeanLevel = message.getCoffeeBeanLevel();
+            this.coffeeType = message.getCoffeeType();
+            this.readyToBrew = message.getReadyToBrew();
+            this.coffeeLevel = message.getCoffeeLevel();
+        }else if(msg instanceof BrewCoffeeMessage){
+            BrewCoffeeMessage message = (BrewCoffeeMessage) msg;
+            brew(message);
+
+        }
     }
 
-    private void brew(String size, String strength){
+    private void brew(BrewCoffeeMessage msg) {
         int tmpsize = 0;
         int tmpstrength = 0;
-        System.out.println(size + " " + strength);
-        switch (size){
+        switch (msg.getSize()) {
             case "Small":
                 tmpsize = 1;
-                setWaterLevel(getWaterLevel()-0.1);
+                if(msg.getWaterLevel() < 0.1 || 1 - msg.getCoffeeLevel() > 0.1)
+                    return;
+                setWaterLevel(getWaterLevel() - 0.1);
                 break;
             case "Medium":
                 tmpsize = 2;
-                setWaterLevel(getWaterLevel()-0.2);
+                if(msg.getWaterLevel() < 0.2 || 1 - msg.getCoffeeLevel() > 0.2)
+                    return;
+                setWaterLevel(getWaterLevel() - 0.2);
                 break;
             case "Large":
                 tmpsize = 3;
-                setWaterLevel(getWaterLevel()-0.3);
+                if(msg.getWaterLevel() < 0.3 || 1 - msg.getCoffeeLevel() > 0.3)
+                    return;
+                setWaterLevel(getWaterLevel() - 0.3);
                 break;
         }
-        switch (strength){
+        switch (msg.getStrength()) {
             case "Weak":
                 tmpstrength = 1;
-                setCoffeeBeanLevel(getCoffeeBeanLevel()-0.1);
+                if(msg.getCoffeeBeanLevel() < 0.1)
+                    return;
+                setCoffeeBeanLevel(getCoffeeBeanLevel() - 0.1);
                 break;
             case "Medium Strength":
                 tmpstrength = 2;
-                setCoffeeBeanLevel(getCoffeeBeanLevel()-0.2);
+                if(msg.getCoffeeBeanLevel() < 0.2)
+                    return;
+                setCoffeeBeanLevel(getCoffeeBeanLevel() - 0.2);
                 break;
             case "Strong":
                 tmpstrength = 3;
-                setCoffeeBeanLevel(getCoffeeBeanLevel()-0.3);
+                if(msg.getCoffeeBeanLevel() < 0.3)
+                    return;
+                setCoffeeBeanLevel(getCoffeeBeanLevel() - 0.3);
                 break;
         }
 
-        try{
-            for(int i = 0; i < tmpsize; i++){
-                for(int j = 0; j < tmpstrength; j++){
-                    System.out.println("Brewing Coffee...");
-                    Thread.sleep(1000);
-                    setCoffeeLevel(getCoffeeLevel()+0.1);
-                    //server.sendToAllClients(0 + "|" + getDetails() + "|" + "coffeeLevel|" + getCoffeeLevel());
+            try {
+                for (int i = 0; i < tmpsize; i++) {
+                    for (int j = 0; j < tmpstrength; j++) {
+                        System.out.println("Brewing Coffee...");
+                        Thread.sleep(1000);
+                        setCoffeeLevel(getCoffeeLevel() + 0.1);
+                        server.sendToAllClients(new CoffeeMessage(getDeviceID(),getName(), getCupStatus(), getWaterLevel(), getCoffeeBeanLevel(), getCoffeeType(), getReadyToBrew(), getCoffeeLevel()));
+                    }
                 }
-            }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-    }
+
 
     private void setCoffeeLevel(double coffee) {
         this.coffeeLevel = coffee;
