@@ -55,15 +55,26 @@ public class SmartThermostat extends SmartDevice{
     public void update(AbstractDeviceMessage msg) {
         ThermostatMessage message = (ThermostatMessage) msg;
         super.update(msg);
-        this.temperature = message.getTemperature();
-        this.setpoint = message.getSetpoint();
+        //only update value if it is not 0
+        if(message.getTemperature() != 0)
+            this.temperature = message.getTemperature();
+        if(message.getSetpoint() != 0)
+            this.setpoint = message.getSetpoint();
         this.heatEnabled = message.getHeatEnabled();
         this.coolEnabled = message.getCoolEnabled();
     }
 
     @Override
     public Object PrepareMessage() {
-        mode = true;
+        //determine mode based on heat and cool enabled, as well as setpoint and temperature values
+        //mode: 0 = off, 1 = heat, 2 = cool
+        int mode;
+        if(temperature < setpoint && heatEnabled)
+            mode = 1;
+        else if(temperature > setpoint && coolEnabled)
+            mode = 2;
+        else
+            mode = 0;
         return new ThermostatMessage(getDeviceID(), getName(), temperature, setpoint, heatEnabled, coolEnabled, mode);
     }
 

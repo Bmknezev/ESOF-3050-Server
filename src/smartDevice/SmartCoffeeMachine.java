@@ -43,7 +43,6 @@ public class SmartCoffeeMachine extends SmartDevice{
         }else if(msg instanceof BrewCoffeeMessage){
             BrewCoffeeMessage message = (BrewCoffeeMessage) msg;
             brew(message);
-
         }
     }
 
