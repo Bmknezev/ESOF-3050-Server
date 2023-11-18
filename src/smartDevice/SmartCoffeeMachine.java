@@ -14,10 +14,8 @@ public class SmartCoffeeMachine extends SmartDevice{
     private boolean readyToBrew; //true if ready to brew, false if not ready to brew
     private boolean brewing; //true if brewing, false if not brewing
     private double coffeeLevel; //amount of coffee in pot
-    private AbstractServer server;
-
-    public SmartCoffeeMachine(String name, int id, boolean connectionStatus, int battery, boolean status){
-        super(id, name, connectionStatus, battery, status);
+    public SmartCoffeeMachine(String name, int id, boolean connectionStatus, int battery, boolean status, AbstractServer server){
+        super(id, name, connectionStatus, battery, status, server);
         this.cupStatus = false;
         this.waterLevel = 0;
         this.coffeeBeanLevel = 0;
@@ -170,10 +168,6 @@ public class SmartCoffeeMachine extends SmartDevice{
         return brewing;
     }
 
-    public void setServer(AbstractServer server) {
-        this.server = server;
-    }
-
     @Override
     public Object PrepareMessage() {
         return new CoffeeMessage(getDeviceID(), getName(), getCupStatus(), getWaterLevel(), getCoffeeBeanLevel(), getCoffeeType(), getReadyToBrew(), getCoffeeLevel());
@@ -182,5 +176,16 @@ public class SmartCoffeeMachine extends SmartDevice{
     @Override
     public String getType() {
         return "Smart Coffee Machine";
+    }
+
+    @Override
+    public void timerUpdate(){
+        //this method is called every second by the timer
+        //it is used to update the device's status
+        //this is where the device would check if it is still connected to the server
+        //and update its battery level
+        //this is run on the JavaFX thread
+        //this method is empty because the coffee machine does not need to update anything
+        server.sendToAllClients(PrepareMessage());
     }
 }

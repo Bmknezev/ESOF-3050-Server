@@ -1,5 +1,6 @@
 package smartDevice;
 
+import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
 import messages.server.LockMessage;
 
@@ -8,8 +9,8 @@ public class SmartLock extends SmartDevice{
     private int password; //password to unlock the door
     private int timer; //timer to lock the door after a certain amount of time
 
-    public SmartLock(String name, int id, boolean connectionStatus, int battery, boolean status, boolean lockStatus){
-        super(id, name, connectionStatus, battery, status);
+    public SmartLock(String name, int id, boolean connectionStatus, int battery, boolean status, boolean lockStatus, AbstractServer server){
+        super(id, name, connectionStatus, battery, status, server);
         this.lockStatus = lockStatus;
     }
 
@@ -70,5 +71,14 @@ public class SmartLock extends SmartDevice{
     @Override
     public String getType() {
         return "Smart Lock";
+    }
+
+    @Override
+    public void timerUpdate() {
+        //this method is called every second by the timer
+        //it is used to update the device's status
+        //this is where the device would check if it is still connected to the server
+        //and update its battery level
+
     }
 }
