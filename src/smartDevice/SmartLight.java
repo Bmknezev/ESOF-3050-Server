@@ -2,12 +2,16 @@ package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
+import messages.automations.AbstractAutomationMessage;
+import messages.automations.LightAutomationMessage;
 import messages.server.LightMessage;
+
 
 public class SmartLight extends SmartDevice{
     private String colour; //hexadecimal colour value (e.g. 0x000000 is black, 0xFFFFFF is white)
     private int brightness; //brightness value from 0 to 100
     private boolean lightStatus; //true if light is on, false if light is off
+
 
     /**
      * This is the constructor for the SmartLight class.
@@ -112,7 +116,18 @@ public class SmartLight extends SmartDevice{
      * This method updates the client every 3 seconds.
      */
     @Override
-    public void timerUpdate(){
+    public void timerUpdate() {
+            server.sendToAllClients(PrepareMessage());
+
+    }
+
+    @Override
+    public void Automation(AbstractAutomationMessage msg) {
+        LightAutomationMessage message = (LightAutomationMessage) msg;
+        setLightStatus(message.getLightStatus());
+        setColour(message.getColour());
+        setBrightness(message.getBrightness());
         server.sendToAllClients(PrepareMessage());
     }
+
 }

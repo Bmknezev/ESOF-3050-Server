@@ -2,6 +2,7 @@ package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
+import messages.automations.AbstractAutomationMessage;
 
 import java.io.Serializable;
 
@@ -135,4 +136,7 @@ public abstract class SmartDevice implements Serializable {
     public abstract String getType();
 
     public abstract void timerUpdate();
+
+    public void Automation(AbstractAutomationMessage msg) {
+    }
 }

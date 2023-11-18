@@ -4,9 +4,11 @@ import messages.AbstractDeviceMessage;
 import messages.AbstractMessage;
 import messages.NewDeviceMessage;
 import messages.StartupMessage;
+import messages.automations.AbstractAutomationMessage;
 import smartDevice.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
 
 import static java.lang.Thread.sleep;
 
@@ -16,6 +18,7 @@ public class SmartHomeServer extends AbstractServer {
     List<ConnectionToClient> clientList = new java.util.ArrayList<>();
     List<Integer> clientIDList = new java.util.ArrayList<>();
     private int totalClients = 0;
+    Timer timer = new Timer();
     /**
      * Constructs a new server.
      *
@@ -32,12 +35,10 @@ public class SmartHomeServer extends AbstractServer {
 
         switch (((AbstractMessage)msg).getType()){
             case 1:
-                System.out.println("Device details received.");
                 //client is requesting device details
                 updateDeviceDetails((AbstractDeviceMessage)msg, client);
                 break;
             case 2:
-                System.out.println("sending details.");
                 //client is sending device details
                 sendDetails((NewDeviceMessage)msg, client);
                 break;
@@ -55,7 +56,24 @@ public class SmartHomeServer extends AbstractServer {
                 }
                 SendDevices(client);
                 break;
+            case 4:
+                //client is sending automation message
+                System.out.println("Automation message received.");
+                DeviceAutomation((AbstractAutomationMessage)msg);
+                break;
         }
+    }
+
+    private void DeviceAutomation(AbstractAutomationMessage msg) {
+        //get device from list
+        SmartDevice device = devices.get(msg.getDeviceID()-1);
+        timer.schedule(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                device.Automation(msg);
+            }
+        }, msg.getDate());
+
     }
 
     private void SendDevices(ConnectionToClient client) {
