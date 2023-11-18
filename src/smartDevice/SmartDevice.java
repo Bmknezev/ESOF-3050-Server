@@ -1,5 +1,6 @@
 package smartDevice;
 
+import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
 
 import java.io.Serializable;
@@ -11,14 +12,16 @@ public abstract class SmartDevice implements Serializable {
     private boolean status; //device ready to use
     private String name;
     private int deviceID;
+    protected AbstractServer server;
 
 
-    public SmartDevice(int id, String name, boolean connectionStatus, int battery, boolean status){
+    public SmartDevice(int id, String name, boolean connectionStatus, int battery, boolean status, AbstractServer server){
         this.name = name;
         this.deviceID = id;
         this.connectionStatus = connectionStatus;
         this.battery = battery;
         this.status = status;
+        this.server = server;
     }
 
     public void setConnectionStatus(boolean connectionStatus){
@@ -69,4 +72,6 @@ public abstract class SmartDevice implements Serializable {
     public abstract Object PrepareMessage();
 
     public abstract String getType();
+
+    public abstract void timerUpdate();
 }

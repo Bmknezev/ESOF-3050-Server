@@ -98,8 +98,8 @@ public class SmartHomeServer extends AbstractServer {
             }
         }
 
-    public void newDevice(SmartDevice device){
-        devices.add(device);
+    public void newDevice(List<SmartDevice> device){
+        devices = device;
     }
 
 }

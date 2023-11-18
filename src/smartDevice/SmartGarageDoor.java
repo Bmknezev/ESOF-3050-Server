@@ -1,5 +1,6 @@
 package smartDevice;
 
+import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
 import messages.server.GarageDoorMessage;
 
@@ -11,8 +12,8 @@ public class SmartGarageDoor extends SmartDevice{
     private int password; //password to open door
     private int passwordAttempts; //number of times password has been entered incorrectly
 
-    public SmartGarageDoor(String name, int id, boolean connectionStatus, int battery, boolean status, boolean safteySwitch, boolean doorStatus, boolean moving){
-        super(id, name,connectionStatus, battery, status);
+    public SmartGarageDoor(String name, int id, boolean connectionStatus, int battery, boolean status, boolean safteySwitch, boolean doorStatus, boolean moving, AbstractServer server){
+        super(id, name,connectionStatus, battery, status, server);
         this.safteySwitch = safteySwitch;
         this.doorStatus = doorStatus;
         this.moving = moving;
@@ -97,5 +98,11 @@ public class SmartGarageDoor extends SmartDevice{
     @Override
     public String getType() {
         return "Smart Garage Door";
+    }
+
+    @Override
+    public void timerUpdate() {
+
+
     }
 }

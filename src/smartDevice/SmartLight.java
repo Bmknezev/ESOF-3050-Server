@@ -1,5 +1,6 @@
 package smartDevice;
 
+import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
 import messages.server.LightMessage;
 
@@ -8,8 +9,8 @@ public class SmartLight extends SmartDevice{
     private int brightness; //brightness value from 0 to 100
     private boolean lightStatus; //true if light is on, false if light is off
 
-    public SmartLight(String name, int id, boolean connectionStatus, int battery, boolean status, String colour, int brightness, boolean lightStatus){
-        super(id, name, connectionStatus, battery, status);
+    public SmartLight(String name, int id, boolean connectionStatus, int battery, boolean status, String colour, int brightness, boolean lightStatus, AbstractServer server){
+        super(id, name, connectionStatus, battery, status, server);
         this.colour = colour;
         this.brightness = brightness;
         this.lightStatus = lightStatus;
@@ -57,5 +58,15 @@ public class SmartLight extends SmartDevice{
     @Override
     public String getType() {
         return "Smart Light";
+    }
+
+    @Override
+    public void timerUpdate(){
+        //this method is called every second by the timer
+        //it is used to update the device's status
+        //this is where the device would check if it is still connected to the server
+        //and update its battery level
+        //this is run on the JavaFX thread
+        //this method is empty because the light does not need to update anything
     }
 }

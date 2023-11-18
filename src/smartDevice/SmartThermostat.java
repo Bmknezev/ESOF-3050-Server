@@ -1,5 +1,6 @@
 package smartDevice;
 
+import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
 import messages.server.ThermostatMessage;
 
@@ -10,8 +11,8 @@ public class SmartThermostat extends SmartDevice{
     private boolean coolEnabled; //if true, cool is enabled
     private Boolean mode; //the mode the thermostat is in (heat, cool, off)
 
-    public SmartThermostat(String name, int id, boolean connectionStatus, int battery, boolean status, float temperature, float setpoint, boolean heatEnabled, boolean coolEnabled){
-        super(id, name, connectionStatus, battery, status);
+    public SmartThermostat(String name, int id, boolean connectionStatus, int battery, boolean status, float temperature, float setpoint, boolean heatEnabled, boolean coolEnabled, AbstractServer server){
+        super(id, name, connectionStatus, battery, status, server);
         this.temperature = temperature;
         this.setpoint = setpoint;
         this.heatEnabled = heatEnabled;
@@ -81,6 +82,12 @@ public class SmartThermostat extends SmartDevice{
     @Override
     public String getType() {
         return "Smart Thermostat";
+    }
+
+    @Override
+    public void timerUpdate() {
+
+
     }
 
 }

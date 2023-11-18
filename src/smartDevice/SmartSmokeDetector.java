@@ -1,5 +1,6 @@
 package smartDevice;
 
+import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
 import messages.server.SmokeDetectorMessage;
 
@@ -11,8 +12,8 @@ public class SmartSmokeDetector extends SmartDevice{
     private boolean alarmStatus; //true if alarm is ready, false if alarm is not ready
     private boolean alarm; //true if alarm is going off, false if alarm is not going off
 
-    public SmartSmokeDetector(String name, int id, boolean connectionStatus, int battery, boolean status){
-        super(id, name, connectionStatus, battery, status);
+    public SmartSmokeDetector(String name, int id, boolean connectionStatus, int battery, boolean status, AbstractServer server){
+        super(id, name, connectionStatus, battery, status, server);
         this.lastTested = new Date();
         this.testStatus = true;
         this.alarmStatus = false;
@@ -68,4 +69,16 @@ public class SmartSmokeDetector extends SmartDevice{
     public String getType() {
         return "Smart Smoke Detector";
     }
+
+    @Override
+    public void timerUpdate(){
+        //this method is called every second by the server
+        //it is used to update the smoke detector's alarm status
+        //if the alarm is going off, it will turn off after 10 seconds
+        if (alarm){
+            alarm = false;
+        }
+    }
+
+
 }
