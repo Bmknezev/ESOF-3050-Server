@@ -14,6 +14,16 @@ public class SmartCoffeeMachine extends SmartDevice{
     private boolean readyToBrew; //true if ready to brew, false if not ready to brew
     private boolean brewing; //true if brewing, false if not brewing
     private double coffeeLevel; //amount of coffee in pot
+
+    /**
+     * This is the constructor for the SmartCoffeeMachine class.
+     * @param name device name
+     * @param id device id
+     * @param connectionStatus connection status
+     * @param battery battery level
+     * @param status device status, online or offline
+     * @param server server
+     */
     public SmartCoffeeMachine(String name, int id, boolean connectionStatus, int battery, boolean status, AbstractServer server){
         super(id, name, connectionStatus, battery, status, server);
         this.cupStatus = false;
@@ -27,6 +37,10 @@ public class SmartCoffeeMachine extends SmartDevice{
     }
 
 
+    /**
+     * This method updates the device's status.
+     * @param msg message from server
+     */
     public void update(AbstractDeviceMessage msg) {
 
         if(msg instanceof CoffeeMessage) {
@@ -44,6 +58,10 @@ public class SmartCoffeeMachine extends SmartDevice{
         }
     }
 
+    /**
+     * This method runs when the client sends a BrewCoffeeMessage.
+     * @param msg message from server
+     */
     private void brew(BrewCoffeeMessage msg) {
         int tmpsize = 0;
         int tmpstrength = 0;

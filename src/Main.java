@@ -6,7 +6,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Main {
+    /**
+     * This is the main method for the server. It creates a new server and a few devices for testing.
+     * It then starts the server and a timer that updates the devices every 3 seconds.
+     * @param args
+     */
     public static void main(String[] args) {
+
         List<SmartDevice> devices = new java.util.ArrayList<>();
         SmartHomeServer s = new SmartHomeServer(19920);
         Timer timer = new Timer();

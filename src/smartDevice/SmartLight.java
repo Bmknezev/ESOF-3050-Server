@@ -9,6 +9,18 @@ public class SmartLight extends SmartDevice{
     private int brightness; //brightness value from 0 to 100
     private boolean lightStatus; //true if light is on, false if light is off
 
+    /**
+     * This is the constructor for the SmartLight class.
+     * @param name device name
+     * @param id device id
+     * @param connectionStatus connection status
+     * @param battery battery level
+     * @param status device status, online or offline
+     * @param colour light colour
+     * @param brightness light brightness
+     * @param lightStatus light status
+     * @param server server
+     */
     public SmartLight(String name, int id, boolean connectionStatus, int battery, boolean status, String colour, int brightness, boolean lightStatus, AbstractServer server){
         super(id, name, connectionStatus, battery, status, server);
         this.colour = colour;
@@ -16,30 +28,58 @@ public class SmartLight extends SmartDevice{
         this.lightStatus = lightStatus;
     }
 
+    /**
+     * This method sets the colour of the light.
+     * @param colour light colour
+     */
     public void setColour(String colour){
         this.colour = colour;
     }
 
+    /**
+     * This method sets the brightness of the light.
+     * @param brightness light brightness
+     */
     public void setBrightness(int brightness){
         this.brightness = brightness;
     }
 
+/**
+     * This method gets the colour of the light.
+     * @return colour light colour
+     */
     public String getColour(){
         return colour;
     }
 
+    /**
+     * This method gets the brightness of the light.
+     * @return brightness light brightness
+     */
     public float getBrightness(){
         return brightness;
     }
 
+    /**
+     * This method sets the status of the light.
+     * @param lightStatus light status
+     */
     public void setLightStatus(boolean lightStatus){
         this.lightStatus = lightStatus;
     }
 
+    /**
+     * This method gets the status of the light.
+     * @return lightStatus light status
+     */
     public boolean getLightStatus(){
         return lightStatus;
     }
 
+    /**
+     * This method updates the device's status.
+     * @param msg message from server
+     */
     @Override
     public void update(AbstractDeviceMessage msg) {
         LightMessage message = (LightMessage) msg;
@@ -50,23 +90,29 @@ public class SmartLight extends SmartDevice{
 
     }
 
+    /**
+     * This method prepares a message to be sent to the server.
+     * @return message
+     */
     @Override
     public Object PrepareMessage() {
         return new LightMessage(getDeviceID(), getName(), getColour(), (int) getBrightness(), getLightStatus());
     }
 
+    /**
+     * This method returns the type of the device.
+     * @return type
+     */
     @Override
     public String getType() {
         return "Smart Light";
     }
 
+    /**
+     * This method updates the client every 3 seconds.
+     */
     @Override
     public void timerUpdate(){
-        //this method is called every second by the timer
-        //it is used to update the device's status
-        //this is where the device would check if it is still connected to the server
-        //and update its battery level
-        //this is run on the JavaFX thread
-        //this method is empty because the light does not need to update anything
+        server.sendToAllClients(PrepareMessage());
     }
 }

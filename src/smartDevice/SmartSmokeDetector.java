@@ -12,6 +12,15 @@ public class SmartSmokeDetector extends SmartDevice{
     private boolean alarmStatus; //true if alarm is ready, false if alarm is not ready
     private boolean alarm; //true if alarm is going off, false if alarm is not going off
 
+    /**
+     * This is the constructor for the SmartSmokeDetector class.
+     * @param name device name
+     * @param id device id
+     * @param connectionStatus connection status
+     * @param battery battery level
+     * @param status device status, online or offline
+     * @param server server
+     */
     public SmartSmokeDetector(String name, int id, boolean connectionStatus, int battery, boolean status, AbstractServer server){
         super(id, name, connectionStatus, battery, status, server);
         this.lastTested = new Date();

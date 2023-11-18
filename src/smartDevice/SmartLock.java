@@ -9,6 +9,16 @@ public class SmartLock extends SmartDevice{
     private int password; //password to unlock the door
     private int timer; //timer to lock the door after a certain amount of time
 
+    /**
+     * This is the constructor for the SmartLock class.
+     * @param name device name
+     * @param id device id
+     * @param connectionStatus connection status
+     * @param battery battery level
+     * @param status device status, online or offline
+     * @param lockStatus lock status, locked or unlocked
+     * @param server server
+     */
     public SmartLock(String name, int id, boolean connectionStatus, int battery, boolean status, boolean lockStatus, AbstractServer server){
         super(id, name, connectionStatus, battery, status, server);
         this.lockStatus = lockStatus;
