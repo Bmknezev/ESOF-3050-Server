@@ -1,9 +1,6 @@
 import com.lloseng.ocsf.server.AbstractServer;
 import com.lloseng.ocsf.server.ConnectionToClient;
-import messages.AbstractDeviceMessage;
-import messages.AbstractMessage;
-import messages.NewDeviceMessage;
-import messages.StartupMessage;
+import messages.*;
 import messages.automations.AbstractAutomationMessage;
 import smartDevice.*;
 import java.io.IOException;
@@ -19,6 +16,10 @@ public class SmartHomeServer extends AbstractServer {
     List<Integer> clientIDList = new java.util.ArrayList<>();
     private int totalClients = 0;
     Timer timer = new Timer();
+
+    List<String> usernames = new java.util.ArrayList<>();
+    List<String> passwords = new java.util.ArrayList<>();
+    
     /**
      * Constructs a new server.
      *
@@ -26,6 +27,10 @@ public class SmartHomeServer extends AbstractServer {
      */
     public SmartHomeServer(int port) {
         super(port);
+
+        //add usernames and passwords
+        usernames.add("admin");
+        passwords.add("admin");
     }
 
     @Override
@@ -61,6 +66,39 @@ public class SmartHomeServer extends AbstractServer {
                 System.out.println("Automation message received.");
                 DeviceAutomation((AbstractAutomationMessage)msg);
                 break;
+                case 5:
+                //client is sending login details
+                System.out.println("Login details received.");
+                Login((LoginMessage)msg, client);
+        }
+    }
+
+    private void Login(LoginMessage msg, ConnectionToClient client) {
+        System.out.println("Login details received.");
+        //check if username and password are correct
+        for(int i = 0; i < usernames.size(); i++){
+            if(usernames.get(i).equals(msg.getUsername()) && passwords.get(i).equals(msg.getPassword())) {
+                System.out.println("Login successful.");
+                //send success message
+                try {
+                    msg.setLoginStatus(true);
+                    client.sendToClient(msg);
+                } catch (IOException e) {
+                    System.out.println("Error sending message to client.");
+                    throw new RuntimeException(e);
+                }
+                return;
+            }
+                //send fail message
+                try {
+                    System.out.println("Login failed.");
+                    msg.setLoginStatus(false);
+                    client.sendToClient(msg);
+                } catch (IOException e) {
+                    System.out.println("Error sending message to client.");
+                    throw new RuntimeException(e);
+                }
+
         }
     }
 

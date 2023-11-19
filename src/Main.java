@@ -17,6 +17,7 @@ public class Main {
         SmartHomeServer s = new SmartHomeServer(19920);
         Timer timer = new Timer();
 
+
         //making a few devices for testing
         SmartLight l = new SmartLight("light 1", 1,true, -1,true,"ffff80",100,true, s);
         SmartLight l2 = new SmartLight("light 2", 2,true, -1,true,"43820180",100,true, s );
