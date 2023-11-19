@@ -19,6 +19,7 @@ public class SmartHomeServer extends AbstractServer {
 
     List<String> usernames = new java.util.ArrayList<>();
     List<String> passwords = new java.util.ArrayList<>();
+    List<Boolean> admin = new java.util.ArrayList<>();
     
     /**
      * Constructs a new server.
@@ -31,6 +32,11 @@ public class SmartHomeServer extends AbstractServer {
         //add usernames and passwords
         usernames.add("admin");
         passwords.add("admin");
+        admin.add(true);
+
+        usernames.add("user");
+        passwords.add("user");
+        admin.add(false);
     }
 
     @Override
@@ -76,12 +82,13 @@ public class SmartHomeServer extends AbstractServer {
     private void Login(LoginMessage msg, ConnectionToClient client) {
         System.out.println("Login details received.");
         //check if username and password are correct
-        for(int i = 0; i < usernames.size(); i++){
-            if(usernames.get(i).equals(msg.getUsername()) && passwords.get(i).equals(msg.getPassword())) {
+        for(int i = 0; i < usernames.size(); i++) {
+            if (usernames.get(i).equals(msg.getUsername()) && passwords.get(i).equals(msg.getPassword())) {
                 System.out.println("Login successful.");
                 //send success message
                 try {
                     msg.setLoginStatus(true);
+                    msg.setAdmin(admin.get(i));
                     client.sendToClient(msg);
                 } catch (IOException e) {
                     System.out.println("Error sending message to client.");
@@ -89,17 +96,19 @@ public class SmartHomeServer extends AbstractServer {
                 }
                 return;
             }
+        }
                 //send fail message
                 try {
                     System.out.println("Login failed.");
                     msg.setLoginStatus(false);
+                    msg.setAdmin(false);
                     client.sendToClient(msg);
                 } catch (IOException e) {
                     System.out.println("Error sending message to client.");
                     throw new RuntimeException(e);
                 }
 
-        }
+
     }
 
     private void DeviceAutomation(AbstractAutomationMessage msg) {
