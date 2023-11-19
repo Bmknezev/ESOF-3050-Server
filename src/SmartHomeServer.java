@@ -131,6 +131,7 @@ public class SmartHomeServer extends AbstractServer {
 
     public void newDevice(SmartDevice device){
         devices.add(device);
+        sendToAllClients(new NewDeviceMessage(device.getDeviceID(), device.getName(), device.getType()));
     }
 
     private void send(Object msg, ConnectionToClient client){
