@@ -31,7 +31,7 @@ public class SmartCoffeeMachine extends SmartDevice{
         this.coffeeBeanLevel = 0;
         this.timer = 0;
         this.coffeeType = "none";
-        this.readyToBrew = false;
+        this.readyToBrew = true;
         this.brewing = false;
         this.coffeeLevel = 0;
     }
@@ -65,45 +65,50 @@ public class SmartCoffeeMachine extends SmartDevice{
     private void brew(BrewCoffeeMessage msg) {
         int tmpsize = 0;
         int tmpstrength = 0;
+        System.out.println("size: " + msg.getSize() + " strength: " + msg.getStrength());
         switch (msg.getSize()) {
             case "Small":
-                tmpsize = 1;
-                if(msg.getWaterLevel() < 0.1 || 1 - msg.getCoffeeLevel() > 0.1)
+                if(msg.getWaterLevel() < 0.1 || 1 - msg.getCoffeeLevel() < 0.1)
                     return;
-                setWaterLevel(getWaterLevel() - 0.1);
+                tmpsize = 1;
                 break;
             case "Medium":
-                tmpsize = 2;
-                if(msg.getWaterLevel() < 0.2 || 1 - msg.getCoffeeLevel() > 0.2)
+                if(msg.getWaterLevel() < 0.2 || 1 - msg.getCoffeeLevel() < 0.2)
                     return;
-                setWaterLevel(getWaterLevel() - 0.2);
+                tmpsize = 2;
                 break;
             case "Large":
-                tmpsize = 3;
-                if(msg.getWaterLevel() < 0.3 || 1 - msg.getCoffeeLevel() > 0.3)
+                if(msg.getWaterLevel() < 0.3 || 1 - msg.getCoffeeLevel() < 0.3)
                     return;
-                setWaterLevel(getWaterLevel() - 0.3);
+                tmpsize = 3;
                 break;
         }
         switch (msg.getStrength()) {
             case "Weak":
-                tmpstrength = 1;
                 if(msg.getCoffeeBeanLevel() < 0.1)
                     return;
-                setCoffeeBeanLevel(getCoffeeBeanLevel() - 0.1);
+                tmpstrength = 1;
                 break;
             case "Medium Strength":
-                tmpstrength = 2;
                 if(msg.getCoffeeBeanLevel() < 0.2)
                     return;
-                setCoffeeBeanLevel(getCoffeeBeanLevel() - 0.2);
+                tmpstrength = 2;
                 break;
             case "Strong":
-                tmpstrength = 3;
                 if(msg.getCoffeeBeanLevel() < 0.3)
                     return;
-                setCoffeeBeanLevel(getCoffeeBeanLevel() - 0.3);
+                tmpstrength = 3;
                 break;
+        }
+
+        if(tmpsize != 0 || tmpstrength != 0){
+            setWaterLevel(getWaterLevel() - (tmpsize * 0.1));
+            setCoffeeBeanLevel(getCoffeeBeanLevel() - (tmpstrength * 0.1));
+            setReadyToBrew(false);
+            setBrewing(true);
+            server.sendToAllClients(new CoffeeMessage(getDeviceID(),getName(), getCupStatus(), getWaterLevel(), getCoffeeBeanLevel(), getCoffeeType(), getReadyToBrew(), getCoffeeLevel()));
+        }else{
+            return;
         }
 
             try {
@@ -115,6 +120,9 @@ public class SmartCoffeeMachine extends SmartDevice{
                         server.sendToAllClients(new CoffeeMessage(getDeviceID(),getName(), getCupStatus(), getWaterLevel(), getCoffeeBeanLevel(), getCoffeeType(), getReadyToBrew(), getCoffeeLevel()));
                     }
                 }
+                setBrewing(false);
+                if(waterLevel > 0 && coffeeBeanLevel > 0)
+                    setReadyToBrew(true);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

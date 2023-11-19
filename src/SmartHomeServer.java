@@ -90,6 +90,7 @@ public class SmartHomeServer extends AbstractServer {
     }
 
     private void updateDeviceDetails(AbstractDeviceMessage msg, ConnectionToClient client) {
+        System.out.println("Device details received." + msg.getDeviceID());
         //get device from list
         SmartDevice device = devices.get(msg.getDeviceID()-1);
         //update device
