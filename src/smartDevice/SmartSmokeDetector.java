@@ -87,6 +87,7 @@ public class SmartSmokeDetector extends SmartDevice{
         if (alarm){
             alarm = false;
         }
+        server.sendToAllClients(PrepareMessage());
     }
 
 

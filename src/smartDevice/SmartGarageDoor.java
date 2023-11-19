@@ -113,7 +113,6 @@ public class SmartGarageDoor extends SmartDevice{
 
     @Override
     public void timerUpdate() {
-
-
+        server.sendToAllClients(PrepareMessage());
     }
 }

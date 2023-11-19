@@ -99,8 +99,7 @@ public class SmartThermostat extends SmartDevice{
 
     @Override
     public void timerUpdate() {
-
-
+        server.sendToAllClients(PrepareMessage());
     }
 
 }

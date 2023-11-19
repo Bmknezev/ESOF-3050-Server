@@ -91,10 +91,7 @@ public class SmartLock extends SmartDevice{
 
     @Override
     public void timerUpdate() {
-        //this method is called every second by the timer
-        //it is used to update the device's status
-        //this is where the device would check if it is still connected to the server
-        //and update its battery level
-
+        //this method is called every 5 second by the timer
+        server.sendToAllClients(PrepareMessage());
     }
 }
