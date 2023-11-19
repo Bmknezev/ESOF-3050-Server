@@ -9,7 +9,7 @@ public class Main {
     /**
      * This is the main method for the server. It creates a new server and a few devices for testing.
      * It then starts the server and a timer that updates the devices every 3 seconds.
-     * @param args
+     * @param args arguments
      */
     public static void main(String[] args) {
 
@@ -45,8 +45,9 @@ public class Main {
 
 
         //starting server and adding the devices
-
-        s.newDevice(devices);
+        for(SmartDevice device : devices){
+            s.newDevice(device);
+        }
 
 
         coffeeMachine.setCoffeeBeanLevel(0.5);

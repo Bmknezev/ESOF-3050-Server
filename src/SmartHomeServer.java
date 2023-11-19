@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 
-import static java.lang.Thread.sleep;
-
-
 public class SmartHomeServer extends AbstractServer {
     List<SmartDevice> devices = new java.util.ArrayList<>();
     List<ConnectionToClient> clientList = new java.util.ArrayList<>();
@@ -43,7 +40,6 @@ public class SmartHomeServer extends AbstractServer {
     protected void handleMessageFromClient(Object msg, ConnectionToClient client){
         System.out.println("Message received: " + msg.toString());
         //check message type
-
         switch (((AbstractMessage)msg).getType()){
             case 1:
                 //client is requesting device details
@@ -59,12 +55,7 @@ public class SmartHomeServer extends AbstractServer {
                 clientList.add(client);
                 clientIDList.add(totalClients);
                 StartupMessage message = new StartupMessage(totalClients);
-                try {
-                    client.sendToClient(message);
-                } catch (IOException e) {
-                    System.out.println("Error sending message to client.");
-                    throw new RuntimeException(e);
-                }
+                send(message, client);
                 SendDevices(client);
                 break;
             case 4:
@@ -72,7 +63,7 @@ public class SmartHomeServer extends AbstractServer {
                 System.out.println("Automation message received.");
                 DeviceAutomation((AbstractAutomationMessage)msg);
                 break;
-                case 5:
+            case 5:
                 //client is sending login details
                 System.out.println("Login details received.");
                 Login((LoginMessage)msg, client);
@@ -85,30 +76,17 @@ public class SmartHomeServer extends AbstractServer {
         for(int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(msg.getUsername()) && passwords.get(i).equals(msg.getPassword())) {
                 System.out.println("Login successful.");
+                msg.setLoginStatus(true);
+                msg.setAdmin(admin.get(i));
                 //send success message
-                try {
-                    msg.setLoginStatus(true);
-                    msg.setAdmin(admin.get(i));
-                    client.sendToClient(msg);
-                } catch (IOException e) {
-                    System.out.println("Error sending message to client.");
-                    throw new RuntimeException(e);
-                }
+                send(msg, client);
                 return;
             }
         }
-                //send fail message
-                try {
-                    System.out.println("Login failed.");
-                    msg.setLoginStatus(false);
-                    msg.setAdmin(false);
-                    client.sendToClient(msg);
-                } catch (IOException e) {
-                    System.out.println("Error sending message to client.");
-                    throw new RuntimeException(e);
-                }
-
-
+        System.out.println("Login failed.");
+        msg.setLoginStatus(false);
+        msg.setAdmin(false);
+        send(msg, client);
     }
 
     private void DeviceAutomation(AbstractAutomationMessage msg) {
@@ -125,14 +103,8 @@ public class SmartHomeServer extends AbstractServer {
 
     private void SendDevices(ConnectionToClient client) {
         for (SmartDevice device : devices) {
-            try {
-                sleep(100);
-                NewDeviceMessage msg = new NewDeviceMessage(device.getDeviceID(), device.getName(), device.getType());
-                client.sendToClient(msg);
-            } catch (IOException | InterruptedException e) {
-                System.out.println("Error sending message to client.");
-                throw new RuntimeException(e);
-            }
+            NewDeviceMessage msg = new NewDeviceMessage(device.getDeviceID(), device.getName(), device.getType());
+            send(msg, client);
         }
     }
 
@@ -143,29 +115,30 @@ public class SmartHomeServer extends AbstractServer {
         //update device
         device.update(msg);
         //send device to client
-        try {
-            client.sendToClient(device.PrepareMessage());
-        } catch (IOException e) {
-            System.out.println("Error sending message to client.");
-            throw new RuntimeException(e);
-        }
+        send(device.PrepareMessage(), client);
     }
 
     private void sendDetails(NewDeviceMessage msg, ConnectionToClient client) {
         //get deviceID from message and get device from list
         SmartDevice device = devices.get((msg).getDeviceID()-1);
         System.out.println("Sending details for device " + device.getName() + " to client " + clientIDList.get(clientList.indexOf(client)));
-            try {
-                client.sendToClient(device.PrepareMessage());
-                System.out.println("Message sent: " + device.PrepareMessage().toString());
-            } catch (IOException e) {
-                System.out.println("Error sending message to client.");
-                throw new RuntimeException(e);
-            }
+        send(device.PrepareMessage(), client);
         }
 
-    public void newDevice(List<SmartDevice> device){
-        devices = device;
+
+
+
+
+    public void newDevice(SmartDevice device){
+        devices.add(device);
     }
 
+    private void send(Object msg, ConnectionToClient client){
+        try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            System.out.println("Error sending message to client.");
+            throw new RuntimeException(e);
+        }
+    }
 }
