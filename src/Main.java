@@ -22,7 +22,7 @@ public class Main {
         SmartLight l = new SmartLight("light 1", 1,true, -1,true,"ffff80",100,true, s);
         SmartLight l2 = new SmartLight("light 2", 2,true, -1,true,"43820180",100,true, s );
 
-        SmartLock lock = new SmartLock("lock 1", 3,true, -1,true, true, s);
+        SmartLock lock = new SmartLock("lock 1", 3,true, -1,true, true, "1234", s);
 
         SmartThermostat thermostat = new SmartThermostat("Thermostat 1" , 4,true, 20,true, 20, 20, true, false, s);
 

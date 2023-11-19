@@ -8,6 +8,7 @@ public class SmartLock extends SmartDevice{
     private boolean lockStatus; //true = locked, false = unlocked
     private int password; //password to unlock the door
     private int timer; //timer to lock the door after a certain amount of time
+    private String pin; //pin to unlock the door
 
     /**
      * This is the constructor for the SmartLock class.
@@ -19,9 +20,10 @@ public class SmartLock extends SmartDevice{
      * @param lockStatus lock status, locked or unlocked
      * @param server server
      */
-    public SmartLock(String name, int id, boolean connectionStatus, int battery, boolean status, boolean lockStatus, AbstractServer server){
+    public SmartLock(String name, int id, boolean connectionStatus, int battery, boolean status, boolean lockStatus, String pin, AbstractServer server){
         super(id, name, connectionStatus, battery, status, server);
         this.lockStatus = lockStatus;
+        this.pin = pin;
     }
 
     public void setLockStatus(boolean lockStatus){
@@ -67,15 +69,19 @@ public class SmartLock extends SmartDevice{
     public void update(AbstractDeviceMessage msg) {
         LockMessage message = (LockMessage) msg;
         super.update(msg);
-        this.lockStatus = ((LockMessage)message).getLockStatus();
-        this.password = ((LockMessage)message).getPassword();
-        this.timer = ((LockMessage)message).getTimer();
+        this.lockStatus = message.getLockStatus();
+        this.password = message.getPassword();
+        this.timer = message.getTimer();
 
     }
 
     @Override
     public Object PrepareMessage() {
-        return new LockMessage(getDeviceID(), getName(), getLockStatus(), getPassword(), getTimer());
+        return new LockMessage(getDeviceID(), getName(), getLockStatus(), getPassword(), getTimer(), getPIN());
+    }
+
+    private String getPIN() {
+        return pin;
     }
 
     @Override
