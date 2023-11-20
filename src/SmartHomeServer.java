@@ -64,12 +64,24 @@ public class SmartHomeServer extends AbstractServer {
                 break;
             case 7:
                 //client is requesting user list
+                if(((UserListMessage)msg).getUserID() == -1){
+                    //System.out.println("User list requested.");
+                    SendUsers(client);
+                    return;
+                }
                 if(((UserListMessage)msg).getNewUser())
                     AddUser((UserListMessage)msg, client);
                 else
-                    SendUsers(client);
+                    modifyUser((UserListMessage)msg, client);
+                SendUsers(client);
                 break;
         }
+    }
+
+    private void modifyUser(UserListMessage msg, ConnectionToClient client) {
+        usernames.set(msg.getUserID(), msg.getUsername());
+        passwords.set(msg.getUserID(), msg.getPassword());
+        admin.set(msg.getUserID(), msg.getAdmin());
     }
 
     private void AddUser(UserListMessage msg, ConnectionToClient client) {
@@ -78,21 +90,19 @@ public class SmartHomeServer extends AbstractServer {
         for(int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(msg.getUsername())) {
                 System.out.println("User already exists.");
-                send(new UserListMessage(msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
+                send(new UserListMessage(-1,msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
                 return;
             }
         }
             usernames.add(msg.getUsername());
             passwords.add(msg.getPassword());
             admin.add(msg.getAdmin());
-            //System.out.println("User added.");
-            send(new UserListMessage(msg.getUsername(), msg.getPassword(), msg.getAdmin(), true), client);
 
     }
 
     private void SendUsers(ConnectionToClient client) {
         for(int i = 0; i < usernames.size(); i++) {
-            UserListMessage msg = new UserListMessage(usernames.get(i), passwords.get(i), admin.get(i), true);
+            UserListMessage msg = new UserListMessage(i, usernames.get(i), passwords.get(i), admin.get(i), true);
             send(msg, client);
         }
     }
