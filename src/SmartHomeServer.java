@@ -74,16 +74,25 @@ public class SmartHomeServer extends AbstractServer {
 
     private void AddUser(UserListMessage msg, ConnectionToClient client) {
         //System.out.println("Adding user " + msg.getUsername());
-        usernames.add(msg.getUsername());
-        passwords.add(msg.getPassword());
-        admin.add(msg.getAdmin());
-        //System.out.println("User added.");
-        send(new UserListMessage(msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
+        //check if user exists
+        for(int i = 0; i < usernames.size(); i++) {
+            if (usernames.get(i).equals(msg.getUsername())) {
+                System.out.println("User already exists.");
+                send(new UserListMessage(msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
+                return;
+            }
+        }
+            usernames.add(msg.getUsername());
+            passwords.add(msg.getPassword());
+            admin.add(msg.getAdmin());
+            //System.out.println("User added.");
+            send(new UserListMessage(msg.getUsername(), msg.getPassword(), msg.getAdmin(), true), client);
+
     }
 
     private void SendUsers(ConnectionToClient client) {
         for(int i = 0; i < usernames.size(); i++) {
-            UserListMessage msg = new UserListMessage(usernames.get(i), passwords.get(i), admin.get(i), false);
+            UserListMessage msg = new UserListMessage(usernames.get(i), passwords.get(i), admin.get(i), true);
             send(msg, client);
         }
     }
