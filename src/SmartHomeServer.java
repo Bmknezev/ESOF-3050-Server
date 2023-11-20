@@ -38,7 +38,7 @@ public class SmartHomeServer extends AbstractServer {
 
     @Override
     protected void handleMessageFromClient(Object msg, ConnectionToClient client){
-        //System.out.println("Message received: " + msg.toString());
+        System.out.println("Message received: " + msg.toString());
         //check message type
         switch (((AbstractMessage)msg).getType()){
             case 1:
@@ -51,11 +51,7 @@ public class SmartHomeServer extends AbstractServer {
                 break;
             case 3:
                 //new client connects
-                totalClients++;
-                clientList.add(client);
-                clientIDList.add(totalClients);
-                StartupMessage message = new StartupMessage(totalClients);
-                send(message, client);
+                System.out.println("New client connected.");
                 SendDevices(client);
                 break;
             case 4:
@@ -67,8 +63,10 @@ public class SmartHomeServer extends AbstractServer {
                 //client is sending login details
                 //System.out.println("Login details received.");
                 Login((LoginMessage)msg, client);
+                break;
             case 7:
                 //client is requesting user list
+                System.out.println("User list request received.");
                 SendUsers(client);
                 break;
         }
