@@ -75,11 +75,10 @@ public class SmartHomeServer extends AbstractServer {
     }
 
     private void SendUsers(ConnectionToClient client) {
-        UserListMessage msg = new UserListMessage();
-        msg.setUsernames(usernames);
-        msg.setPasswords(passwords);
-        msg.setAdmin(admin);
-        send(msg, client);
+        for(int i = 0; i < usernames.size(); i++) {
+            UserListMessage msg = new UserListMessage(usernames.get(i), passwords.get(i), admin.get(i));
+            send(msg, client);
+        }
     }
 
     private void Login(LoginMessage msg, ConnectionToClient client) {
