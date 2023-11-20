@@ -67,7 +67,19 @@ public class SmartHomeServer extends AbstractServer {
                 //client is sending login details
                 //System.out.println("Login details received.");
                 Login((LoginMessage)msg, client);
+            case 7:
+                //client is requesting user list
+                SendUsers(client);
+                break;
         }
+    }
+
+    private void SendUsers(ConnectionToClient client) {
+        UserListMessage msg = new UserListMessage();
+        msg.setUsernames(usernames);
+        msg.setPasswords(passwords);
+        msg.setAdmin(admin);
+        send(msg, client);
     }
 
     private void Login(LoginMessage msg, ConnectionToClient client) {
