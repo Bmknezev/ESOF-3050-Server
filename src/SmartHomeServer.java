@@ -79,6 +79,27 @@ public class SmartHomeServer extends AbstractServer {
     }
 
     private void modifyUser(UserListMessage msg, ConnectionToClient client) {
+        for(int i = 0; i < usernames.size(); i++) {
+            if (usernames.get(i).equals(msg.getUsername())) {
+                System.out.println("User already exists.");
+                send(new UserListMessage(-1,msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
+                return;
+            }
+        }
+        if(!msg.getAdmin()){
+            int tmp = 0;
+            for(int i = 0; i < admin.size(); i++) {
+                if(admin.get(i))
+                    tmp++;
+
+            }
+            if(tmp == 1 && admin.get(msg.getUserID())){
+                System.out.println("Cannot remove last admin.");
+                send(new UserListMessage(-1,msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
+                return;
+            }
+
+        }
         usernames.set(msg.getUserID(), msg.getUsername());
         passwords.set(msg.getUserID(), msg.getPassword());
         admin.set(msg.getUserID(), msg.getAdmin());
