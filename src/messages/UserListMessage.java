@@ -1,6 +1,8 @@
 package messages;
 
-public class UserListMessage extends AbstractMessage{
+import messages.client.Listable;
+
+public class UserListMessage extends AbstractMessage implements Listable {
 
     private String username;
     private String password;
@@ -51,5 +53,15 @@ public class UserListMessage extends AbstractMessage{
 
     public int getUserID() {
         return userID;
+    }
+
+    @Override
+    public String getNameListable() {
+        return username;
+    }
+
+    @Override
+    public String getCategoryListable() {
+        return admin ? "Admin User" : "User";
     }
 }
