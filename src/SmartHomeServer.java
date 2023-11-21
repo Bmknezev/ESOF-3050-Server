@@ -12,7 +12,7 @@ public class SmartHomeServer extends AbstractServer {
     List<ConnectionToClient> clientList = new java.util.ArrayList<>();
     List<Integer> clientIDList = new java.util.ArrayList<>();
     private int totalClients = 0;
-    Timer timer = new Timer();
+    Timer timer = new Timer(); //this is a timer
 
     List<String> usernames = new java.util.ArrayList<>();
     List<String> passwords = new java.util.ArrayList<>();
