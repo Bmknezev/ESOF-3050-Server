@@ -14,16 +14,19 @@ public class SmartLock extends SmartDevice{
      * This is the constructor for the SmartLock class.
      * @param name device name
      * @param id device id
-     * @param connectionStatus connection status
-     * @param battery battery level
-     * @param status device status, online or offline
      * @param lockStatus lock status, locked or unlocked
      * @param server server
      */
-    public SmartLock(String name, int id, boolean connectionStatus, int battery, boolean status, boolean lockStatus, String pin, AbstractServer server){
-        super(id, name, connectionStatus, battery, status, server);
+    public SmartLock(String name, int id, boolean lockStatus, String pin, AbstractServer server){
+        super(id, name, server);
         this.lockStatus = lockStatus;
         this.pin = pin;
+    }
+
+    public SmartLock(int id, String deviceName, AbstractServer smartHomeServer) {
+        super(id, deviceName, smartHomeServer);
+        this.lockStatus = false;
+
     }
 
     public void setLockStatus(boolean lockStatus){

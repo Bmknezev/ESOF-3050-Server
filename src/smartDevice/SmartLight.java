@@ -17,19 +17,23 @@ public class SmartLight extends SmartDevice{
      * This is the constructor for the SmartLight class.
      * @param name device name
      * @param id device id
-     * @param connectionStatus connection status
-     * @param battery battery level
-     * @param status device status, online or offline
      * @param colour light colour
      * @param brightness light brightness
      * @param lightStatus light status
      * @param server server
      */
-    public SmartLight(String name, int id, boolean connectionStatus, int battery, boolean status, String colour, int brightness, boolean lightStatus, AbstractServer server){
-        super(id, name, connectionStatus, battery, status, server);
+    public SmartLight(String name, int id, String colour, int brightness, boolean lightStatus, AbstractServer server){
+        super(id, name, server);
         this.colour = colour;
         this.brightness = brightness;
         this.lightStatus = lightStatus;
+    }
+
+    public SmartLight(int deviceID, String deviceName, AbstractServer server) {
+        super(deviceID, deviceName, server);
+        this.colour = "ffff00";
+        this.brightness = 100;
+        this.lightStatus = false;
     }
 
     /**
@@ -92,6 +96,9 @@ public class SmartLight extends SmartDevice{
         setBrightness(message.getBrightness());
         setLightStatus(message.getLightStatus());
 
+        System.out.println(lightStatus + " " + message.getLightStatus());
+
+
     }
 
     /**
@@ -100,6 +107,7 @@ public class SmartLight extends SmartDevice{
      */
     @Override
     public Object PrepareMessage() {
+        System.out.println("Preparing message: " + getDeviceID() + " " + getName() + " " + getColour() + " " + getBrightness() + " " + getLightStatus());
         return new LightMessage(getDeviceID(), getName(), getColour(), (int) getBrightness(), getLightStatus());
     }
 

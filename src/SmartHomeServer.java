@@ -9,6 +9,7 @@ import java.util.Timer;
 
 public class SmartHomeServer extends AbstractServer {
     List<SmartDevice> devices = new java.util.ArrayList<>();
+    List<SmartDevice> addedDevices = new java.util.ArrayList<>();
     List<ConnectionToClient> clientList = new java.util.ArrayList<>();
     List<Integer> clientIDList = new java.util.ArrayList<>();
     private int totalClients = 0;
@@ -46,7 +47,11 @@ public class SmartHomeServer extends AbstractServer {
                 break;
             case 2:
                 //client is sending device details
-                sendDetails((NewDeviceMessage)msg, client);
+                NewDeviceMessage message = ((NewDeviceMessage)msg);
+                if(message.getDeviceID() == -1){
+                    addNewDevice(message, client);
+                }else
+                    sendDetails((NewDeviceMessage)msg, client);
                 break;
             case 3:
                 //new client connects
@@ -76,6 +81,36 @@ public class SmartHomeServer extends AbstractServer {
                 SendUsers(client);
                 break;
         }
+    }
+
+    private void addNewDevice(NewDeviceMessage message, ConnectionToClient client) {
+        //System.out.println("Adding new device.");
+        SmartDevice device;
+        switch (message.getDeviceTypeNumber()){
+            case 0:
+                device = new SmartLight(devices.size() + 1, message.getDeviceName(), this);
+                break;
+            case 1:
+                device = new SmartLock(devices.size() + 1, message.getDeviceName(), this);
+                break;
+            case 2:
+                device = new SmartThermostat(devices.size() + 1, message.getDeviceName(), this);
+                break;
+            case 3:
+                device = new SmartCoffeeMachine(devices.size() + 1, message.getDeviceName(), this);
+                break;
+            case 4:
+                device = new SmartGarageDoor(devices.size() + 1, message.getDeviceName(), this);
+                break;
+            case 5:
+                device = new SmartSmokeDetector(devices.size() + 1, message.getDeviceName(), this);
+                break;
+            default:
+                System.out.println("Error: Device type not found");
+                return;
+        }
+        newDevice(device);
+        //send(new NewDeviceMessage(device.getDeviceID(), device.getName(), device.getType()), client);
     }
 
     private void modifyUser(UserListMessage msg, ConnectionToClient client) {
@@ -160,15 +195,13 @@ public class SmartHomeServer extends AbstractServer {
 
     private void SendDevices(ConnectionToClient client) {
         for (SmartDevice device : devices) {
-            System.out.println("sending device");
             NewDeviceMessage msg = new NewDeviceMessage(device.getDeviceID(), device.getName(), device.getType());
             send(msg, client);
-            //send(device.PrepareMessage(), client);
         }
     }
 
     private void updateDeviceDetails(AbstractDeviceMessage msg, ConnectionToClient client) {
-        //System.out.println("Device details received." + msg.getDeviceID());
+        System.out.println("Device details received." + msg.getDeviceID());
         //get device from list
         SmartDevice device = devices.get(msg.getDeviceID()-1);
         //update device
@@ -180,7 +213,6 @@ public class SmartHomeServer extends AbstractServer {
     private void sendDetails(NewDeviceMessage msg, ConnectionToClient client) {
         //get deviceID from message and get device from list
         SmartDevice device = devices.get((msg).getDeviceID()-1);
-        //System.out.println("Sending details for device " + device.getName() + " to client " + clientIDList.get(clientList.indexOf(client)));
         send(device.PrepareMessage(), client);
         }
 
@@ -190,7 +222,10 @@ public class SmartHomeServer extends AbstractServer {
 
     public void newDevice(SmartDevice device){
         devices.add(device);
-        sendToAllClients(new NewDeviceMessage(device.getDeviceID(), device.getName(), device.getType()));
+        for(SmartDevice d : devices){
+            sendToAllClients(new NewDeviceMessage(d.getDeviceID(), d.getName(), d.getType()));
+        }
+
     }
 
     private void send(Object msg, ConnectionToClient client){

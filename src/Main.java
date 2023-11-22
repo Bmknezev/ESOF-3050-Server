@@ -19,19 +19,20 @@ public class Main {
         Timer timer = new Timer();
 
 
-        //making a few devices for testing
-        SmartLight l = new SmartLight("light 1", 1, true, -1, true, "ffff80", 100, true, s);
-        SmartLight l2 = new SmartLight("light 2", 2, true, -1, true, "43820180", 100, true, s);
+        /*making a few devices for testing
+        SmartLight l = new SmartLight("light 1", 1, "ffff80", 100, true, s);
+        SmartLight l2 = new SmartLight("light 2", 2,  "43820180", 100, true, s);
 
-        SmartLock lock = new SmartLock("lock 1", 3, true, -1, true, true, "1234", s);
+        SmartLock lock = new SmartLock("lock 1", 3, true, "1234", s);
 
-        SmartThermostat thermostat = new SmartThermostat("Thermostat 1", 4, true, 20, true, 20, 20, true, false, s);
+        SmartThermostat thermostat = new SmartThermostat("Thermostat 1", 4, 20, 20, true, false, s);
 
-        SmartCoffeeMachine coffeeMachine = new SmartCoffeeMachine("Coffee Machine 1", 5, true, -1, true, s);
+        SmartCoffeeMachine coffeeMachine = new SmartCoffeeMachine("Coffee Machine 1", 5, s);
 
-        SmartGarageDoor garageDoor = new SmartGarageDoor("Garage Door 1", 6, true, -1, true, true, true, true, s);
+        SmartGarageDoor garageDoor = new SmartGarageDoor("Garage Door 1", 6, true, true, true, s);
 
-        SmartSmokeDetector smokeDetector = new SmartSmokeDetector("Smoke Detector 1", 7, true, -1, true, s);
+        SmartSmokeDetector smokeDetector = new SmartSmokeDetector("Smoke Detector 1", 7, s);
+
 
         devices.add(l);
         devices.add(l2);
@@ -42,15 +43,17 @@ public class Main {
         devices.add(smokeDetector);
 
 
+
+
         //starting server and adding the devices
         for (SmartDevice device : devices) {
-            s.newDevice(device);
+            //s.newDevice(device);
         }
 
 
         coffeeMachine.setCoffeeBeanLevel(0.5);
         coffeeMachine.setWaterLevel(0.7);
-
+*/
 
         try {
             s.listen();
@@ -101,7 +104,7 @@ public class Main {
                             String colour = input.next();
                             System.out.println("Please enter the light brightness:");
                             int brightness = input.nextInt();
-                            SmartLight light1 = new SmartLight(name, devices.size() + 1, true, -1, true, colour, brightness, false, s);
+                            SmartLight light1 = new SmartLight(name, devices.size() + 1, colour, brightness, false, s);
                             devices.add(light1);
                             s.newDevice(light1);
                             break;
@@ -110,7 +113,7 @@ public class Main {
                             name = input.next();
                             System.out.println("Please enter the lock code:");
                             String code = input.next();
-                            SmartLock lock1 = new SmartLock(name, devices.size() + 1, true, -1, true, true, code, s);
+                            SmartLock lock1 = new SmartLock(name, devices.size() + 1, true, code, s);
                             devices.add(lock1);
                             s.newDevice(lock1);
                             break;
@@ -119,28 +122,28 @@ public class Main {
                             name = input.next();
                             System.out.println("Please enter the thermostat temperature:");
                             int temperature = input.nextInt();
-                            SmartThermostat thermostat1 = new SmartThermostat(name, devices.size() + 1, true, -1, true, temperature, temperature, true, false, s);
+                            SmartThermostat thermostat1 = new SmartThermostat(name, devices.size() + 1, temperature, temperature, true, false, s);
                             devices.add(thermostat1);
                             s.newDevice(thermostat1);
                             break;
                         case 4:
                             System.out.println("Please enter the coffee machine name:");
                             name = input.next();
-                            SmartCoffeeMachine coffeeMachine1 = new SmartCoffeeMachine(name, devices.size() + 1, true, -1, true, s);
+                            SmartCoffeeMachine coffeeMachine1 = new SmartCoffeeMachine(name, devices.size() + 1, s);
                             devices.add(coffeeMachine1);
                             s.newDevice(coffeeMachine1);
                             break;
                         case 5:
                             System.out.println("Please enter the garage door name:");
                             name = input.next();
-                            SmartGarageDoor garageDoor1 = new SmartGarageDoor(name, devices.size() + 1, true, -1, true, true, true, true, s);
+                            SmartGarageDoor garageDoor1 = new SmartGarageDoor(name, devices.size() + 1, true, true, true, s);
                             devices.add(garageDoor1);
                             s.newDevice(garageDoor1);
                             break;
                         case 6:
                             System.out.println("Please enter the smoke detector name:");
                             name = input.next();
-                            SmartSmokeDetector smokeDetector1 = new SmartSmokeDetector(name, devices.size() + 1, true, -1, true, s);
+                            SmartSmokeDetector smokeDetector1 = new SmartSmokeDetector(name, devices.size() + 1, s);
                             devices.add(smokeDetector1);
                             s.newDevice(smokeDetector1);
                             break;

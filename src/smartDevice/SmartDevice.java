@@ -11,10 +11,6 @@ public abstract class SmartDevice implements Serializable {
      * This is the abstract class for all smart devices. It contains all the methods and variables that are common to all devices.
      * It also contains the abstract methods that are implemented in the subclasses.
      */
-    private boolean connectionStatus; //device connected to network
-    private int battery; //battery level
-
-    private boolean status; //device ready to use
     private String name;
     private int deviceID;
     protected AbstractServer server;
@@ -24,67 +20,13 @@ public abstract class SmartDevice implements Serializable {
      * This is the constructor for the SmartDevice class.
      * @param id device id
      * @param name device name
-     * @param connectionStatus connection status
-     * @param battery battery level
-     * @param status device status, online or offline
      * @param server server
      */
-    public SmartDevice(int id, String name, boolean connectionStatus, int battery, boolean status, AbstractServer server){
+    public SmartDevice(int id, String name, AbstractServer server){
 
         this.name = name;
         this.deviceID = id;
-        this.connectionStatus = connectionStatus;
-        this.battery = battery;
-        this.status = status;
         this.server = server;
-    }
-
-    /**
-     * This method sets the connection status of the device.
-     * @param connectionStatus connection status
-     */
-    public void setConnectionStatus(boolean connectionStatus){
-        this.connectionStatus = connectionStatus;
-    }
-
-    /**
-     * This method sets the battery level of the device.
-     * @param battery battery level
-     */
-    public void setBattery(int battery){
-        this.battery = battery;
-    }
-
-    /**
-     * This method sets the status of the device.
-     * @param status status
-     */
-    public void setStatus(boolean status){
-        this.status = status;
-    }
-
-    /**
-     * This method returns the connection status of the device.
-     * @return connectionStatus connection status
-     */
-    public boolean getConnectionStatus(){
-        return connectionStatus;
-    }
-
-    /**
-     * This method returns the battery level of the device.
-     * @return battery
-     */
-    public int getBattery(){
-        return battery;
-    }
-
-    /**
-     * This method returns the status of the device.
-     * @return status
-     */
-    public boolean getStatus(){
-        return status;
     }
 
     /**

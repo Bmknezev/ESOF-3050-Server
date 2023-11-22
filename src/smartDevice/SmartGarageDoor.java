@@ -15,20 +15,26 @@ public class SmartGarageDoor extends SmartDevice{
     /** This is the constructor for the SmartGarageDoor class.
      * @param name device name
      * @param id device id
-     * @param connectionStatus connection status
-     * @param battery battery level
-     * @param status device status, online or offline
      * @param safteySwitch true if object is detected under door, false if no object is detected
      * @param doorStatus true if door is open, false if door is closed
      * @param moving true if door is moving, false if door is not moving
      * @param server server
      */
-    public SmartGarageDoor(String name, int id, boolean connectionStatus, int battery, boolean status, boolean safteySwitch, boolean doorStatus, boolean moving, AbstractServer server){
-        super(id, name,connectionStatus, battery, status, server);
+    public SmartGarageDoor(String name, int id, boolean safteySwitch, boolean doorStatus, boolean moving, AbstractServer server){
+        super(id, name, server);
         this.safteySwitch = safteySwitch;
         this.doorStatus = doorStatus;
         this.moving = moving;
         this.passwordAttempts = 0;
+    }
+
+    public SmartGarageDoor(int id, String deviceName, AbstractServer smartHomeServer) {
+        super(id, deviceName, smartHomeServer);
+        this.safteySwitch = false;
+        this.doorStatus = false;
+        this.moving = false;
+        this.passwordAttempts = 0;
+
     }
 
     public void setSafteySwitch(boolean safteySwitch){

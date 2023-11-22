@@ -15,21 +15,26 @@ public class SmartThermostat extends SmartDevice{
      * This is the constructor for the SmartThermostat class.
      * @param name device name
      * @param id device id
-     * @param connectionStatus connection status
-     * @param battery battery level
-     * @param status device status, online or offline
      * @param temperature current temperature
      * @param setpoint temperature the thermostat is set to
      * @param heatEnabled if true, heat is enabled
      * @param coolEnabled if true, cool is enabled
      * @param server server
      */
-    public SmartThermostat(String name, int id, boolean connectionStatus, int battery, boolean status, float temperature, float setpoint, boolean heatEnabled, boolean coolEnabled, AbstractServer server){
-        super(id, name, connectionStatus, battery, status, server);
+    public SmartThermostat(String name, int id, float temperature, float setpoint, boolean heatEnabled, boolean coolEnabled, AbstractServer server){
+        super(id, name, server);
         this.temperature = temperature;
         this.setpoint = setpoint;
         this.heatEnabled = heatEnabled;
         this.coolEnabled = coolEnabled;
+    }
+
+    public SmartThermostat(int id, String deviceName, AbstractServer smartHomeServer) {
+        super(id, deviceName, smartHomeServer);
+        this.temperature = 20;
+        this.setpoint = 20;
+        this.heatEnabled = false;
+        this.coolEnabled = false;
     }
 
     public void setTemperature(float temperature){

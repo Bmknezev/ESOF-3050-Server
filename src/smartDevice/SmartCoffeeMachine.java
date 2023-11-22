@@ -19,19 +19,29 @@ public class SmartCoffeeMachine extends SmartDevice{
      * This is the constructor for the SmartCoffeeMachine class.
      * @param name device name
      * @param id device id
-     * @param connectionStatus connection status
-     * @param battery battery level
-     * @param status device status, online or offline
+
      * @param server server
      */
-    public SmartCoffeeMachine(String name, int id, boolean connectionStatus, int battery, boolean status, AbstractServer server){
-        super(id, name, connectionStatus, battery, status, server);
+    public SmartCoffeeMachine(String name, int id, AbstractServer server){
+        super(id, name, server);
         this.cupStatus = false;
         this.waterLevel = 0;
         this.coffeeBeanLevel = 0;
         this.timer = 0;
         this.coffeeType = "none";
         this.readyToBrew = true;
+        this.brewing = false;
+        this.coffeeLevel = 0;
+    }
+
+    public SmartCoffeeMachine(int id, String deviceName, AbstractServer smartHomeServer) {
+        super(id, deviceName, smartHomeServer);
+        this.cupStatus = false;
+        this.waterLevel = 0;
+        this.coffeeBeanLevel = 0;
+        this.timer = 0;
+        this.coffeeType = "none";
+        this.readyToBrew = false;
         this.brewing = false;
         this.coffeeLevel = 0;
     }

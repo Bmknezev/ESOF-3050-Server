@@ -16,17 +16,18 @@ public class SmartSmokeDetector extends SmartDevice{
      * This is the constructor for the SmartSmokeDetector class.
      * @param name device name
      * @param id device id
-     * @param connectionStatus connection status
-     * @param battery battery level
-     * @param status device status, online or offline
      * @param server server
      */
-    public SmartSmokeDetector(String name, int id, boolean connectionStatus, int battery, boolean status, AbstractServer server){
-        super(id, name, connectionStatus, battery, status, server);
+    public SmartSmokeDetector(String name, int id, AbstractServer server){
+        super(id, name, server);
         this.lastTested = new Date();
         this.testStatus = true;
         this.alarmStatus = false;
         this.alarm = false;
+    }
+
+    public SmartSmokeDetector(int id, String deviceName, AbstractServer smartHomeServer) {
+        super(id, deviceName, smartHomeServer);
     }
 
     public void setLastTested(Date lastTested){
