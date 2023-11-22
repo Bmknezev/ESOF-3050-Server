@@ -160,8 +160,10 @@ public class SmartHomeServer extends AbstractServer {
 
     private void SendDevices(ConnectionToClient client) {
         for (SmartDevice device : devices) {
+            System.out.println("sending device");
             NewDeviceMessage msg = new NewDeviceMessage(device.getDeviceID(), device.getName(), device.getType());
             send(msg, client);
+            //send(device.PrepareMessage(), client);
         }
     }
 
@@ -197,6 +199,9 @@ public class SmartHomeServer extends AbstractServer {
         } catch (IOException e) {
             //System.out.println("Error sending message to client.");
             throw new RuntimeException(e);
+        }catch (Exception e){
+            //System.out.println("Error sending message to client.");
+            e.printStackTrace();
         }
     }
 }
