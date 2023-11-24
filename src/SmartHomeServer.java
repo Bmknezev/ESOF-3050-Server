@@ -212,7 +212,7 @@ public class SmartHomeServer extends AbstractServer {
     private void sendDetails(NewDeviceMessage msg, ConnectionToClient client) {
         if(msg.getDeviceType().equals("delete")){
             //delete device
-            devices.remove(msg.getDeviceID()-1);
+            devices.remove(msg.getDeviceID());
             for(SmartDevice d : devices){
 
                 sendToAllClients(new NewDeviceMessage(d.getDeviceID(), d.getName(), d.getType()));
