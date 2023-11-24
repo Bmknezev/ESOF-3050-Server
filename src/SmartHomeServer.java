@@ -110,7 +110,6 @@ public class SmartHomeServer extends AbstractServer {
                 return;
         }
         newDevice(device);
-        //send(new NewDeviceMessage(device.getDeviceID(), device.getName(), device.getType()), client);
     }
 
     private void modifyUser(UserListMessage msg, ConnectionToClient client) {
@@ -211,6 +210,15 @@ public class SmartHomeServer extends AbstractServer {
     }
 
     private void sendDetails(NewDeviceMessage msg, ConnectionToClient client) {
+        if(msg.getDeviceType().equals("delete")){
+            //delete device
+            devices.remove(msg.getDeviceID()-1);
+            for(SmartDevice d : devices){
+
+                sendToAllClients(new NewDeviceMessage(d.getDeviceID(), d.getName(), d.getType()));
+            }
+            return;
+        }
         //get deviceID from message and get device from list
         SmartDevice device = devices.get((msg).getDeviceID()-1);
         send(device.PrepareMessage(), client);
