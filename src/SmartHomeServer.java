@@ -13,6 +13,7 @@ public class SmartHomeServer extends AbstractServer {
     List<ConnectionToClient> clientList = new java.util.ArrayList<>();
     List<Integer> clientIDList = new java.util.ArrayList<>();
     private int totalClients = 0;
+    private int deviceID = 0;
     Timer timer = new Timer(); //this is a timer
 
     List<String> usernames = new java.util.ArrayList<>();
@@ -88,27 +89,28 @@ public class SmartHomeServer extends AbstractServer {
         SmartDevice device;
         switch (message.getDeviceTypeNumber()){
             case 0:
-                device = new SmartLight(devices.size() + 1, message.getDeviceName(), this);
+                device = new SmartLight(deviceID, message.getDeviceName(), this);
                 break;
             case 1:
-                device = new SmartLock(devices.size() + 1, message.getDeviceName(), this);
+                device = new SmartLock(deviceID, message.getDeviceName(), this);
                 break;
             case 2:
-                device = new SmartThermostat(devices.size() + 1, message.getDeviceName(), this);
+                device = new SmartThermostat(deviceID, message.getDeviceName(), this);
                 break;
             case 3:
-                device = new SmartCoffeeMachine(devices.size() + 1, message.getDeviceName(), this);
+                device = new SmartCoffeeMachine(deviceID, message.getDeviceName(), this);
                 break;
             case 4:
-                device = new SmartGarageDoor(devices.size() + 1, message.getDeviceName(), this);
+                device = new SmartGarageDoor(deviceID, message.getDeviceName(), this);
                 break;
             case 5:
-                device = new SmartSmokeDetector(devices.size() + 1, message.getDeviceName(), this);
+                device = new SmartSmokeDetector(deviceID, message.getDeviceName(), this);
                 break;
             default:
                 System.out.println("Error: Device type not found");
                 return;
         }
+        deviceID++;
         newDevice(device);
     }
 
@@ -182,13 +184,19 @@ public class SmartHomeServer extends AbstractServer {
 
     private void DeviceAutomation(AbstractAutomationMessage msg) {
         //get device from list
-        SmartDevice device = devices.get(msg.getDeviceID()-1);
-        timer.schedule(new java.util.TimerTask() {
-            @Override
-            public void run() {
-                device.Automation(msg);
+        for(SmartDevice device : devices){
+            if(device.getDeviceID() == msg.getDeviceID()){
+                //schedule task if device is found
+                timer.schedule(new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        device.Automation(msg);
+                    }
+                }, msg.getDate());
+                return;
             }
-        }, msg.getDate());
+        }
+
 
     }
 
@@ -200,29 +208,41 @@ public class SmartHomeServer extends AbstractServer {
     }
 
     private void updateDeviceDetails(AbstractDeviceMessage msg, ConnectionToClient client) {
-        System.out.println("Device details received." + msg.getDeviceID());
         //get device from list
-        SmartDevice device = devices.get(msg.getDeviceID()-1);
-        //update device
-        device.update(msg);
-        //send device to client
-        send(device.PrepareMessage(), client);
+        for (SmartDevice device : devices) {
+            if (device.getDeviceID() == msg.getDeviceID()) {
+                //update device
+                device.update(msg);
+                //send device to client
+                send(device.PrepareMessage(), client);
+                return;
+            }
+        }
     }
 
     private void sendDetails(NewDeviceMessage msg, ConnectionToClient client) {
         if(msg.getDeviceType().equals("delete")){
             //delete device
-            devices.remove(msg.getDeviceID());
             for(SmartDevice d : devices){
-
+                if(d.getDeviceID() == msg.getDeviceID()){
+                    devices.remove(d);
+                    break;
+                }
+            }
+            for(SmartDevice d : devices){
                 sendToAllClients(new NewDeviceMessage(d.getDeviceID(), d.getName(), d.getType()));
             }
             return;
         }
         //get deviceID from message and get device from list
-        SmartDevice device = devices.get((msg).getDeviceID()-1);
-        send(device.PrepareMessage(), client);
+        for(SmartDevice device : devices){
+            if(device.getDeviceID() == msg.getDeviceID()){
+                //send device to client
+                send(device.PrepareMessage(), client);
+                return;
+            }
         }
+    }
 
 
 
