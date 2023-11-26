@@ -9,16 +9,13 @@ import java.util.Timer;
 
 public class SmartHomeServer extends AbstractServer {
     List<SmartDevice> devices = new java.util.ArrayList<>();
-    List<SmartDevice> addedDevices = new java.util.ArrayList<>();
+    List<User> users = new java.util.ArrayList<>();
     List<ConnectionToClient> clientList = new java.util.ArrayList<>();
     List<Integer> clientIDList = new java.util.ArrayList<>();
     private int totalClients = 0;
     private int deviceID = 0;
+    private int userID = 1;
     Timer timer = new Timer(); //this is a timer
-
-    List<String> usernames = new java.util.ArrayList<>();
-    List<String> passwords = new java.util.ArrayList<>();
-    List<Boolean> admin = new java.util.ArrayList<>();
     
     /**
      * Constructs a new server.
@@ -29,13 +26,10 @@ public class SmartHomeServer extends AbstractServer {
         super(port);
 
         //add usernames and passwords
-        usernames.add("admin");
-        passwords.add("admin");
-        admin.add(true);
-
-        usernames.add("user");
-        passwords.add("user");
-        admin.add(false);
+        users.add(new User(userID, "admin", "admin", true));
+        userID++;
+        users.add(new User(userID, "user", "user", false));
+        userID++;
     }
 
     @Override
@@ -77,8 +71,15 @@ public class SmartHomeServer extends AbstractServer {
                 }
                 if(((UserListMessage)msg).getNewUser())
                     AddUser((UserListMessage)msg, client);
-                else
-                    modifyUser((UserListMessage)msg, client);
+                else{
+                    try{
+                        modifyUser((UserListMessage)msg, client);
+                    }catch (Exception e) {
+                        System.out.println("Error modifying user.");
+                        e.printStackTrace();
+                    }
+                }
+
                 SendUsers(client);
                 break;
         }
@@ -115,50 +116,67 @@ public class SmartHomeServer extends AbstractServer {
     }
 
     private void modifyUser(UserListMessage msg, ConnectionToClient client) {
-        for(int i = 0; i < usernames.size(); i++) {
-            if (usernames.get(i).equals(msg.getUsername()) && i != msg.getUserID()) {
-                System.out.println("User already exists.");
-                send(new UserListMessage(-1,msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
-                return;
+        System.out.println("Modifying user.");
+        if(msg.getUsername().equals("delete")){
+            for(User user : users){
+                if(user.getUserID() == msg.getUserID()){
+                    System.out.println("User deleted.");
+                    users.remove(user);
+                    break;
+                }
             }
+        }
+        for(User user : users){
+            if(user.getUserID() != msg.getUserID())
+                if (user.getUsername().equals(msg.getUsername())) {
+                    System.out.println("User already exists.");
+                    send(new UserListMessage(-1, msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
+                    return;
+                }
         }
         if(!msg.getAdmin()){
             int tmp = 0;
-            for(int i = 0; i < admin.size(); i++) {
-                if(admin.get(i))
+            for(User user : users) {
+                if(user.getAdmin())
                     tmp++;
-
             }
-            if(tmp == 1 && admin.get(msg.getUserID())){
+            for(User user : users) {
+                if(user.getUserID() == msg.getUserID())
+                    if(user.getAdmin())
+                        tmp--;
+            }
+            if(tmp == 0){
                 send(new UserListMessage(-3,msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
                 return;
             }
 
         }
-        usernames.set(msg.getUserID(), msg.getUsername());
-        passwords.set(msg.getUserID(), msg.getPassword());
-        admin.set(msg.getUserID(), msg.getAdmin());
+        for(User user : users){
+            if(user.getUserID() == msg.getUserID()){
+                user.update(msg);
+                break;
+            }
+        }
     }
 
     private void AddUser(UserListMessage msg, ConnectionToClient client) {
         //System.out.println("Adding user " + msg.getUsername());
         //check if user exists
-        for(int i = 0; i < usernames.size(); i++) {
-            if (usernames.get(i).equals(msg.getUsername())) {
+        for(User user : users) {
+            if (user.getUsername().equals(msg.getUsername())) {
                 System.out.println("User already exists.");
                 send(new UserListMessage(-1,msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
                 return;
             }
         }
-            usernames.add(msg.getUsername());
-            passwords.add(msg.getPassword());
-            admin.add(msg.getAdmin());
-
+        users.add(new User(userID, msg.getUsername(), msg.getPassword(), msg.getAdmin()));
+        userID++;
     }
 
     private void SendUsers(ConnectionToClient client) {
-        for(int i = 0; i < usernames.size(); i++) {
-            UserListMessage msg = new UserListMessage(i, usernames.get(i), passwords.get(i), admin.get(i), true);
+        for(User user : users) {
+            UserListMessage msg = user.prepareMessage();
+            msg.setNewUser(true);
             send(msg, client);
         }
     }
@@ -166,11 +184,11 @@ public class SmartHomeServer extends AbstractServer {
     private void Login(LoginMessage msg, ConnectionToClient client) {
         //System.out.println("Login details received.");
         //check if username and password are correct
-        for(int i = 0; i < usernames.size(); i++) {
-            if (usernames.get(i).equals(msg.getUsername()) && passwords.get(i).equals(msg.getPassword())) {
+        for(User user : users) {
+            if (user.getUsername().equals(msg.getUsername()) && user.getPassword().equals(msg.getPassword())) {
                 //System.out.println("Login successful.");
                 msg.setLoginStatus(true);
-                msg.setAdmin(admin.get(i));
+                msg.setAdmin(user.getAdmin());
                 //send success message
                 send(msg, client);
                 return;
