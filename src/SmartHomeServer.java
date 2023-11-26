@@ -102,7 +102,7 @@ public class SmartHomeServer extends AbstractServer {
                     }
                 }
                 if(device.getType().equals("Smart Garage Door")){
-                    if(msg.getPin() == ((SmartGarageDoor)device).getPassword()){
+                    if(msg.getPin() == ((SmartGarageDoor)device).getPIN()){
                         msg.setPinStatus(true);
                         send(msg, client);
                         System.out.println("PIN correct.");
@@ -132,8 +132,8 @@ public class SmartHomeServer extends AbstractServer {
                     }
                 }
                 if(device.getType().equals("Smart Garage Door")){
-                    if(msg.getPin() == ((SmartGarageDoor)device).getPassword()){
-                        ((SmartGarageDoor)device).setPassword(msg.getNewPin());
+                    if(msg.getPin() == ((SmartGarageDoor)device).getPIN()){
+                        ((SmartGarageDoor)device).setPIN(msg.getNewPin());
                         msg.setPinStatus(true);
                         send(msg, client);
                         System.out.println("PIN changed.");
@@ -166,7 +166,7 @@ public class SmartHomeServer extends AbstractServer {
                 device = new SmartCoffeeMachine(deviceID, message.getDeviceName(), this);
                 break;
             case 4:
-                device = new SmartGarageDoor(deviceID, message.getDeviceName(), this);
+                device = new SmartGarageDoor(deviceID, message.getDeviceName(), message.getPIN(), this);
                 break;
             case 5:
                 device = new SmartSmokeDetector(deviceID, message.getDeviceName(), this);

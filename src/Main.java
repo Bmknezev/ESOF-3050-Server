@@ -278,7 +278,7 @@ public class Main {
                                     break;
                                 case 4:
                                     System.out.println("Please enter the new pin:");
-                                    ((SmartGarageDoor) devices.get(choice)).setPassword(Integer.parseInt(input.next()));
+                                    ((SmartGarageDoor) devices.get(choice)).setPIN(Integer.parseInt(input.next()));
                                     break;
                                 default:
                                     System.out.println("Invalid choice");

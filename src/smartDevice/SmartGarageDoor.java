@@ -9,7 +9,7 @@ public class SmartGarageDoor extends SmartDevice{
     private boolean doorStatus; //true if door is open, false if door is closed
     private boolean moving; //true if door is moving, false if door is not moving
     private boolean usePassword; //true if password is needed to open door, false if password is not needed
-    private int password; //password to open door
+    private int pin; //password to open door
     private int passwordAttempts; //number of times password has been entered incorrectly
 
     /** This is the constructor for the SmartGarageDoor class.
@@ -28,12 +28,13 @@ public class SmartGarageDoor extends SmartDevice{
         this.passwordAttempts = 0;
     }
 
-    public SmartGarageDoor(int id, String deviceName, AbstractServer smartHomeServer) {
+    public SmartGarageDoor(int id, String deviceName, int PIN, AbstractServer smartHomeServer) {
         super(id, deviceName, smartHomeServer);
         this.safteySwitch = false;
         this.doorStatus = false;
         this.moving = false;
         this.passwordAttempts = 0;
+        this.pin = PIN;
 
     }
 
@@ -49,13 +50,13 @@ public class SmartGarageDoor extends SmartDevice{
         this.moving = moving;
     }
 
-    public void setUsePassword(boolean usePassword, int password){
+    public void setUsePassword(boolean usePassword, int pin){
         this.usePassword = usePassword;
-        this.setPassword(password);
+        this.setPIN(pin);
     }
 
-    public void setPassword(int password){
-        this.password = password;
+    public void setPIN(int pin){
+        this.pin = pin;
     }
 
     public boolean getSafteySwitch(){
@@ -74,12 +75,12 @@ public class SmartGarageDoor extends SmartDevice{
         return usePassword;
     }
 
-    public int getPassword(){
-        return password;
+    public int getPIN(){
+        return pin;
     }
 
-    public Boolean authenticatePassword(int password){
-        if (this.password == password){
+    public Boolean authenticatePassword(int pin){
+        if (this.pin == pin){
             passwordAttempts = 0;
             return true;
         }
@@ -100,6 +101,7 @@ public class SmartGarageDoor extends SmartDevice{
     public void update(AbstractDeviceMessage msg) {
         super.update(msg);
         GarageDoorMessage message = (GarageDoorMessage) msg;
+        System.out.println(message.getDoorStatus());
         setSafteySwitch(message.getSafteySwitch());
         setDoorStatus(message.getDoorStatus());
         setMoving(message.getMoving());
@@ -109,7 +111,7 @@ public class SmartGarageDoor extends SmartDevice{
 
     @Override
     public Object PrepareMessage() {
-        return new GarageDoorMessage(getDeviceID(), getName(), getSafteySwitch(), getDoorStatus(), getMoving(), getUsePassword(), getPassword(), passwordAttempts);
+        return new GarageDoorMessage(getDeviceID(), getName(), getSafteySwitch(), getDoorStatus(), getMoving(), getUsePassword(), getPIN(), passwordAttempts);
     }
 
     @Override
