@@ -71,14 +71,9 @@ public class SmartHomeServer extends AbstractServer {
                 }
                 if(((UserListMessage)msg).getNewUser())
                     AddUser((UserListMessage)msg, client);
-                else{
-                    try{
-                        modifyUser((UserListMessage)msg, client);
-                    }catch (Exception e) {
-                        System.out.println("Error modifying user.");
-                        e.printStackTrace();
-                    }
-                }
+                else
+                    modifyUser((UserListMessage)msg, client);
+
 
                 SendUsers(client);
                 break;
@@ -116,24 +111,37 @@ public class SmartHomeServer extends AbstractServer {
     }
 
     private void modifyUser(UserListMessage msg, ConnectionToClient client) {
-        System.out.println("Modifying user.");
-        if(msg.getUsername().equals("delete")){
+        //check if deleting user
+        if(msg.getPassword().equals("delete")){
+            //search through all users for user to delete
             for(User user : users){
                 if(user.getUserID() == msg.getUserID()){
+                    //check if deleting current user
+                    if(user.getUsername().equals(msg.getUsername())){
+                        System.out.println("Cannot delete current user.");
+                        send(new UserListMessage(-2, msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
+                        return;
+                    }
                     System.out.println("User deleted.");
                     users.remove(user);
-                    break;
+                    return;
                 }
             }
+
         }
+
+        //this is now for updating users
+        //check if username already used
         for(User user : users){
-            if(user.getUserID() != msg.getUserID())
+            if(user.getUserID() != msg.getUserID()) //check if username is from current user
                 if (user.getUsername().equals(msg.getUsername())) {
                     System.out.println("User already exists.");
                     send(new UserListMessage(-1, msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
                     return;
                 }
         }
+
+        //check for how many admins will be left after the update
         if(!msg.getAdmin()){
             int tmp = 0;
             for(User user : users) {
@@ -145,12 +153,14 @@ public class SmartHomeServer extends AbstractServer {
                     if(user.getAdmin())
                         tmp--;
             }
-            if(tmp == 0){
+            //if there will be no admins left, don't update
+            if(tmp <= 0){
                 send(new UserListMessage(-3,msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
                 return;
             }
 
         }
+        //update user
         for(User user : users){
             if(user.getUserID() == msg.getUserID()){
                 user.update(msg);
@@ -160,7 +170,11 @@ public class SmartHomeServer extends AbstractServer {
     }
 
     private void AddUser(UserListMessage msg, ConnectionToClient client) {
-        //System.out.println("Adding user " + msg.getUsername());
+        if(msg.getUsername().isEmpty() || msg.getPassword().isEmpty()){
+            System.out.println("Username or password is empty.");
+            send(new UserListMessage(-4,msg.getUsername(), msg.getPassword(), msg.getAdmin(), false), client);
+            return;
+        }
         //check if user exists
         for(User user : users) {
             if (user.getUsername().equals(msg.getUsername())) {
