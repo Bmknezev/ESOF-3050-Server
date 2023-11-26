@@ -127,7 +127,6 @@ public class SmartHomeServer extends AbstractServer {
                     return;
                 }
             }
-
         }
 
         //this is now for updating users
