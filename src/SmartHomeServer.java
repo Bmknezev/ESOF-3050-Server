@@ -62,6 +62,15 @@ public class SmartHomeServer extends AbstractServer {
                 //System.out.println("Login details received.");
                 Login((LoginMessage)msg, client);
                 break;
+            case 6:
+                //client is sending new pin details
+                //System.out.println("Pin details received.");
+                if(((PinMessage)msg).getNewPin() == -1)
+                    CheckPIN((PinMessage) msg, client);
+                else
+                    ChangePIN((PinMessage) msg, client);
+
+                break;
             case 7:
                 //client is requesting user list
                 if(((UserListMessage)msg).getUserID() == -1){
@@ -80,6 +89,66 @@ public class SmartHomeServer extends AbstractServer {
         }
     }
 
+    private void CheckPIN(PinMessage msg, ConnectionToClient client) {
+        //get device from list
+        for(SmartDevice device : devices){
+            if(device.getDeviceID() == msg.getDeviceID()){
+                if(device.getType().equals("Smart Lock")){
+                    if(msg.getPin() == ((SmartLock)device).getPIN()){
+                        msg.setPinStatus(true);
+                        send(msg, client);
+                        System.out.println("PIN correct.");
+                        return;
+                    }
+                }
+                if(device.getType().equals("Smart Garage Door")){
+                    if(msg.getPin() == ((SmartGarageDoor)device).getPassword()){
+                        msg.setPinStatus(true);
+                        send(msg, client);
+                        System.out.println("PIN correct.");
+                        return;
+                    }
+                }
+
+                //if it gets here, the pin was incorrect
+                msg.setPinStatus(false);
+                send(msg, client);
+                System.out.println("PIN incorrect.");
+            }
+        }
+    }
+
+    private void ChangePIN(PinMessage msg, ConnectionToClient client) {
+        //get device from list
+        for(SmartDevice device : devices){
+            if(device.getDeviceID() == msg.getDeviceID()){
+                if(device.getType().equals("Smart Lock")){
+                    if(msg.getPin() == ((SmartLock)device).getPIN()){
+                        ((SmartLock)device).setPIN(msg.getNewPin());
+                        msg.setPinStatus(true);
+                        send(msg, client);
+                        System.out.println("PIN changed.");
+                        return;
+                    }
+                }
+                if(device.getType().equals("Smart Garage Door")){
+                    if(msg.getPin() == ((SmartGarageDoor)device).getPassword()){
+                        ((SmartGarageDoor)device).setPassword(msg.getNewPin());
+                        msg.setPinStatus(true);
+                        send(msg, client);
+                        System.out.println("PIN changed.");
+                        return;
+                    }
+                }
+
+                //if it gets here, the pin was incorrect
+                msg.setPinStatus(false);
+                send(msg, client);
+                System.out.println("PIN change failed.");
+            }
+        }
+    }
+
     private void addNewDevice(NewDeviceMessage message, ConnectionToClient client) {
         //System.out.println("Adding new device.");
         SmartDevice device;
@@ -88,7 +157,7 @@ public class SmartHomeServer extends AbstractServer {
                 device = new SmartLight(deviceID, message.getDeviceName(), this);
                 break;
             case 1:
-                device = new SmartLock(deviceID, message.getDeviceName(), this);
+                device = new SmartLock(deviceID, message.getDeviceName(),message.getPIN(), this);
                 break;
             case 2:
                 device = new SmartThermostat(deviceID, message.getDeviceName(), this);

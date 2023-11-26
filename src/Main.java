@@ -113,7 +113,7 @@ public class Main {
                             name = input.next();
                             System.out.println("Please enter the lock code:");
                             String code = input.next();
-                            SmartLock lock1 = new SmartLock(name, devices.size() + 1, true, code, s);
+                            SmartLock lock1 = new SmartLock(name, devices.size() + 1, true, Integer.parseInt(code), s);
                             devices.add(lock1);
                             s.newDevice(lock1);
                             break;
@@ -203,7 +203,7 @@ public class Main {
                                     break;
                                 case 2:
                                     System.out.println("Please enter the new code:");
-                                    ((SmartLock) devices.get(choice)).setPassword(Integer.parseInt(input.next()));
+                                    ((SmartLock) devices.get(choice)).setPIN(Integer.parseInt(input.next()));
                                     break;
                                 default:
                                     System.out.println("Invalid choice");

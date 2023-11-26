@@ -6,9 +6,8 @@ import messages.server.LockMessage;
 
 public class SmartLock extends SmartDevice{
     private boolean lockStatus; //true = locked, false = unlocked
-    private int password; //password to unlock the door
     private int timer; //timer to lock the door after a certain amount of time
-    private String pin; //pin to unlock the door
+    private int pin; //pin to unlock the door
 
     /**
      * This is the constructor for the SmartLock class.
@@ -17,15 +16,16 @@ public class SmartLock extends SmartDevice{
      * @param lockStatus lock status, locked or unlocked
      * @param server server
      */
-    public SmartLock(String name, int id, boolean lockStatus, String pin, AbstractServer server){
+    public SmartLock(String name, int id, boolean lockStatus, int pin, AbstractServer server){
         super(id, name, server);
         this.lockStatus = lockStatus;
         this.pin = pin;
     }
 
-    public SmartLock(int id, String deviceName, AbstractServer smartHomeServer) {
+    public SmartLock(int id, String deviceName, int pin,AbstractServer smartHomeServer) {
         super(id, deviceName, smartHomeServer);
         this.lockStatus = false;
+        this.pin = pin;
 
     }
 
@@ -33,20 +33,14 @@ public class SmartLock extends SmartDevice{
         this.lockStatus = lockStatus;
     }
 
-    public void setPassword(int password){
-        this.password = password;
-    }
 
     public boolean getLockStatus(){
         return lockStatus;
     }
 
-    public int getPassword(){
-        return password;
-    }
 
-    public Boolean authenticatePassword(int password){
-        if (this.password == password){
+    public Boolean authenticatePassword(int pin){
+        if (this.pin == pin){
             return true;
         }
         else{
@@ -73,18 +67,21 @@ public class SmartLock extends SmartDevice{
         LockMessage message = (LockMessage) msg;
         super.update(msg);
         this.lockStatus = message.getLockStatus();
-        this.password = message.getPassword();
+        this.pin = message.getPIN();
         this.timer = message.getTimer();
 
     }
 
     @Override
     public Object PrepareMessage() {
-        return new LockMessage(getDeviceID(), getName(), getLockStatus(), getPassword(), getTimer(), getPIN());
+        return new LockMessage(getDeviceID(), getName(), getLockStatus(), getTimer(), getPIN());
     }
 
-    private String getPIN() {
+    public int getPIN() {
         return pin;
+    }
+    public void setPIN(int pin) {
+        this.pin = pin;
     }
 
     @Override
