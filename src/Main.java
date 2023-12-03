@@ -3,8 +3,6 @@ import smartDevice.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Main {
     /**
@@ -16,7 +14,6 @@ public class Main {
 
         List<SmartDevice> devices = new java.util.ArrayList<>();
         SmartHomeServer s = new SmartHomeServer(19920);
-        Timer timer = new Timer();
 
 
         /*making a few devices for testing
@@ -61,15 +58,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                for (SmartDevice device : devices) {
-                    device.timerUpdate();
-                }
 
-            }
-        }, 0, 5000);
 
 
         //dev menu stuff

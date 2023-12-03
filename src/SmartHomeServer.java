@@ -6,6 +6,7 @@ import smartDevice.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class SmartHomeServer extends AbstractServer {
     List<SmartDevice> devices = new java.util.ArrayList<>();
@@ -16,6 +17,7 @@ public class SmartHomeServer extends AbstractServer {
     private int deviceID = 0;
     private int userID = 1;
     Timer timer = new Timer(); //this is a timer
+    Timer updateTimer = new Timer(); //this is a timer
     
     /**
      * Constructs a new server.
@@ -264,10 +266,11 @@ public class SmartHomeServer extends AbstractServer {
     }
 
     private void SendUsers(ConnectionToClient client) {
+        sendToAllClients(new NewDeviceMessage(-5, "", ""));
         for(User user : users) {
             UserListMessage msg = user.prepareMessage();
             msg.setNewUser(true);
-            send(msg, client);
+            sendToAllClients(msg);
         }
     }
 
@@ -330,6 +333,7 @@ public class SmartHomeServer extends AbstractServer {
 
     private void sendDetails(NewDeviceMessage msg, ConnectionToClient client) {
         if(msg.getDeviceType().equals("delete")){
+            sendToAllClients(new NewDeviceMessage(-5, msg.getDeviceName(), msg.getDeviceType()));
             //delete device
             for(SmartDevice d : devices){
                 if(d.getDeviceID() == msg.getDeviceID()){
@@ -357,11 +361,19 @@ public class SmartHomeServer extends AbstractServer {
 
 
     public void newDevice(SmartDevice device){
+        sendToAllClients(new NewDeviceMessage(-5, device.getName(), device.getType()));
         devices.add(device);
         for(SmartDevice d : devices){
             sendToAllClients(new NewDeviceMessage(d.getDeviceID(), d.getName(), d.getType()));
         }
 
+        updateTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                device.timerUpdate();
+
+            }
+        }, 0, 1000);
     }
 
     private void send(Object msg, ConnectionToClient client){
