@@ -11,9 +11,6 @@ import java.util.TimerTask;
 public class SmartHomeServer extends AbstractServer {
     List<SmartDevice> devices = new java.util.ArrayList<>();
     List<User> users = new java.util.ArrayList<>();
-    List<ConnectionToClient> clientList = new java.util.ArrayList<>();
-    List<Integer> clientIDList = new java.util.ArrayList<>();
-    private int totalClients = 0;
     private int deviceID = 0;
     private int userID = 1;
     Timer timer = new Timer(); //this is a timer
