@@ -16,41 +16,6 @@ public class Main {
         SmartHomeServer s = new SmartHomeServer(19920);
 
 
-        /*making a few devices for testing
-        SmartLight l = new SmartLight("light 1", 1, "ffff80", 100, true, s);
-        SmartLight l2 = new SmartLight("light 2", 2,  "43820180", 100, true, s);
-
-        SmartLock lock = new SmartLock("lock 1", 3, true, "1234", s);
-
-        SmartThermostat thermostat = new SmartThermostat("Thermostat 1", 4, 20, 20, true, false, s);
-
-        SmartCoffeeMachine coffeeMachine = new SmartCoffeeMachine("Coffee Machine 1", 5, s);
-
-        SmartGarageDoor garageDoor = new SmartGarageDoor("Garage Door 1", 6, true, true, true, s);
-
-        SmartSmokeDetector smokeDetector = new SmartSmokeDetector("Smoke Detector 1", 7, s);
-
-
-        devices.add(l);
-        devices.add(l2);
-        devices.add(lock);
-        devices.add(thermostat);
-        devices.add(coffeeMachine);
-        devices.add(garageDoor);
-        devices.add(smokeDetector);
-
-
-
-
-        //starting server and adding the devices
-        for (SmartDevice device : devices) {
-            //s.newDevice(device);
-        }
-
-
-        coffeeMachine.setCoffeeBeanLevel(0.5);
-        coffeeMachine.setWaterLevel(0.7);
-*/
 
         try {
             s.listen();
