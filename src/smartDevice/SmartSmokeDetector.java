@@ -1,5 +1,9 @@
 package smartDevice;
 
+import com.lloseng.ocsf.server.AbstractServer;
+import messages.AbstractDeviceMessage;
+import messages.server.SmokeDetectorMessage;
+
 import java.util.Date;
 
 public class SmartSmokeDetector extends SmartDevice{
@@ -8,30 +12,22 @@ public class SmartSmokeDetector extends SmartDevice{
     private boolean alarmStatus; //true if alarm is ready, false if alarm is not ready
     private boolean alarm; //true if alarm is going off, false if alarm is not going off
 
-    public SmartSmokeDetector(String name, int id, boolean connectionStatus, int battery, boolean status){
-        super(id, name, connectionStatus, battery, status);
+    /**
+     * This is the constructor for the SmartSmokeDetector class.
+     * @param name device name
+     * @param id device id
+     * @param server server
+     */
+    public SmartSmokeDetector(String name, int id, AbstractServer server){
+        super(id, name, server);
         this.lastTested = new Date();
         this.testStatus = true;
         this.alarmStatus = false;
         this.alarm = false;
     }
 
-    @Override
-    public void update(String[] s) {
-        System.out.println("Updating Smart Smoke Detector");
-        setLastTested(new Date());
-        setTestStatus(Boolean.parseBoolean(s[0]));
-        setAlarmStatus(Boolean.parseBoolean(s[1]));
-        setAlarm(Boolean.parseBoolean(s[2]));
-    }
-
-    @Override
-    public String getDetails() {
-        return  super.getDeviceID() + "|" + super.getName() +"|" + getAlarmStatus() + "|" + getTestStatus() + "|" + getAlarm() + "|" +super.getBattery() + "|" + getLastTested();
-    }
-
-    public String toString(){
-        return super.getName() + "|" + "Smart Smoke Detector" + "|" + super.getDeviceID();
+    public SmartSmokeDetector(int id, String deviceName, AbstractServer smartHomeServer) {
+        super(id, deviceName, smartHomeServer);
     }
 
     public void setLastTested(Date lastTested){
@@ -64,6 +60,35 @@ public class SmartSmokeDetector extends SmartDevice{
 
     public boolean getAlarm(){
         return alarm;
+    }
+
+
+    public void update(AbstractDeviceMessage msg){
+        SmokeDetectorMessage message = (SmokeDetectorMessage) msg;
+        super.update(msg);
+        setLastTested(message.getLastTested());
+        setTestStatus(message.getTestStatus());
+        setAlarmStatus(message.getAlarmStatus());
+    }
+    @Override
+    public Object PrepareMessage() {
+        return new SmokeDetectorMessage(getDeviceID(), getName(), getLastTested(), getTestStatus(), getAlarmStatus());
+    }
+
+    @Override
+    public String getType() {
+        return "Smart Smoke Detector";
+    }
+
+    @Override
+    public void timerUpdate(){
+        //this method is called every second by the server
+        //it is used to update the smoke detector's alarm status
+        //if the alarm is going off, it will turn off after 10 seconds
+        if (alarm){
+            alarm = false;
+        }
+        server.sendToAllClients(PrepareMessage());
     }
 
 

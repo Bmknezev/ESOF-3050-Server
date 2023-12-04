@@ -1,19 +1,41 @@
 package smartDevice;
 
+import com.lloseng.ocsf.server.AbstractServer;
+import messages.AbstractDeviceMessage;
+import messages.server.GarageDoorMessage;
+
 public class SmartGarageDoor extends SmartDevice{
     private boolean safteySwitch; //true if object is detected under door, false if no object is detected
     private boolean doorStatus; //true if door is open, false if door is closed
     private boolean moving; //true if door is moving, false if door is not moving
     private boolean usePassword; //true if password is needed to open door, false if password is not needed
-    private int password; //password to open door
+    private int pin; //password to open door
     private int passwordAttempts; //number of times password has been entered incorrectly
 
-    public SmartGarageDoor(String name, int id, boolean connectionStatus, int battery, boolean status, boolean safteySwitch, boolean doorStatus, boolean moving){
-        super(id, name,connectionStatus, battery, status);
+    /** This is the constructor for the SmartGarageDoor class.
+     * @param name device name
+     * @param id device id
+     * @param safteySwitch true if object is detected under door, false if no object is detected
+     * @param doorStatus true if door is open, false if door is closed
+     * @param moving true if door is moving, false if door is not moving
+     * @param server server
+     */
+    public SmartGarageDoor(String name, int id, boolean safteySwitch, boolean doorStatus, boolean moving, AbstractServer server){
+        super(id, name, server);
         this.safteySwitch = safteySwitch;
         this.doorStatus = doorStatus;
         this.moving = moving;
         this.passwordAttempts = 0;
+    }
+
+    public SmartGarageDoor(int id, String deviceName, int PIN, AbstractServer smartHomeServer) {
+        super(id, deviceName, smartHomeServer);
+        this.safteySwitch = false;
+        this.doorStatus = false;
+        this.moving = false;
+        this.passwordAttempts = 0;
+        this.pin = PIN;
+
     }
 
     public void setSafteySwitch(boolean safteySwitch){
@@ -28,13 +50,13 @@ public class SmartGarageDoor extends SmartDevice{
         this.moving = moving;
     }
 
-    public void setUsePassword(boolean usePassword, int password){
+    public void setUsePassword(boolean usePassword, int pin){
         this.usePassword = usePassword;
-        this.setPassword(password);
+        this.setPIN(pin);
     }
 
-    public void setPassword(int password){
-        this.password = password;
+    public void setPIN(int pin){
+        this.pin = pin;
     }
 
     public boolean getSafteySwitch(){
@@ -53,12 +75,12 @@ public class SmartGarageDoor extends SmartDevice{
         return usePassword;
     }
 
-    public int getPassword(){
-        return password;
+    public int getPIN(){
+        return pin;
     }
 
-    public Boolean authenticatePassword(int password){
-        if (this.password == password){
+    public Boolean authenticatePassword(int pin){
+        if (this.pin == pin){
             passwordAttempts = 0;
             return true;
         }
@@ -76,20 +98,29 @@ public class SmartGarageDoor extends SmartDevice{
     }
 
     @Override
-    public void update(String[] s) {
-        System.out.println("Updating Smart Garage Door");
-        setSafteySwitch(Boolean.parseBoolean(s[0]));
-        setDoorStatus(Boolean.parseBoolean(s[1]));
-        setMoving(Boolean.parseBoolean(s[2]));
-        setUsePassword(Boolean.parseBoolean(s[3]), Integer.parseInt(s[4]));
+    public void update(AbstractDeviceMessage msg) {
+        super.update(msg);
+        GarageDoorMessage message = (GarageDoorMessage) msg;
+        System.out.println(message.getDoorStatus());
+        setSafteySwitch(message.getSafteySwitch());
+        setDoorStatus(message.getDoorStatus());
+        setMoving(message.getMoving());
+        setUsePassword(message.getUsePassword(), message.getPassword());
+
     }
 
     @Override
-    public String getDetails() {
-        return super.getDeviceID() + "|" + super.getName() + "|" + safteySwitch + "|" + doorStatus + "|" + moving + "|" + usePassword + "|" + password;
+    public Object PrepareMessage() {
+        return new GarageDoorMessage(getDeviceID(), getName(), getSafteySwitch(), getDoorStatus(), getMoving(), getUsePassword(), getPIN(), passwordAttempts);
     }
 
-    public String toString(){
-        return super.getName() + "|" + "Smart Garage Door" + "|" + super.getDeviceID();
+    @Override
+    public String getType() {
+        return "Smart Garage Door";
+    }
+
+    @Override
+    public void timerUpdate() {
+        server.sendToAllClients(PrepareMessage());
     }
 }

@@ -1,33 +1,46 @@
 package smartDevice;
 
+import com.lloseng.ocsf.server.AbstractServer;
+import messages.AbstractDeviceMessage;
+import messages.server.LockMessage;
+
 public class SmartLock extends SmartDevice{
     private boolean lockStatus; //true = locked, false = unlocked
-    private int password; //password to unlock the door
     private int timer; //timer to lock the door after a certain amount of time
+    private int pin; //pin to unlock the door
 
-    public SmartLock(String name, int id, boolean connectionStatus, int battery, boolean status, boolean lockStatus){
-        super(id, name, connectionStatus, battery, status);
+    /**
+     * This is the constructor for the SmartLock class.
+     * @param name device name
+     * @param id device id
+     * @param lockStatus lock status, locked or unlocked
+     * @param server server
+     */
+    public SmartLock(String name, int id, boolean lockStatus, int pin, AbstractServer server){
+        super(id, name, server);
         this.lockStatus = lockStatus;
+        this.pin = pin;
+    }
+
+    public SmartLock(int id, String deviceName, int pin,AbstractServer smartHomeServer) {
+        super(id, deviceName, smartHomeServer);
+        this.lockStatus = false;
+        this.pin = pin;
+
     }
 
     public void setLockStatus(boolean lockStatus){
         this.lockStatus = lockStatus;
     }
 
-    public void setPassword(int password){
-        this.password = password;
-    }
 
     public boolean getLockStatus(){
         return lockStatus;
     }
 
-    public int getPassword(){
-        return password;
-    }
 
-    public Boolean authenticatePassword(int password){
-        if (this.password == password){
+    public Boolean authenticatePassword(int pin){
+        if (this.pin == pin){
             return true;
         }
         else{
@@ -48,32 +61,37 @@ public class SmartLock extends SmartDevice{
         System.out.println("ALERT: Someone is trying to break into your house!");
     }
 
+
     @Override
-    public void update(String[] s) {
-        for (int i = 0; i < s.length; i+=2){
-            switch (s[i]){
-                case "lockStatus":
-                    System.out.println("Updating Smart Lock");
-                    setLockStatus(Boolean.parseBoolean(s[i+1]));
-                    break;
-                case "password":
-                    System.out.println("Updating password");
-                    setPassword(Integer.parseInt(s[i+1]));
-                    break;
-                case "timer":
-                    System.out.println("Updating timer");
-                    setTimer(Integer.parseInt(s[i+1]));
-                    break;
-            }
-        }
+    public void update(AbstractDeviceMessage msg) {
+        LockMessage message = (LockMessage) msg;
+        super.update(msg);
+        this.lockStatus = message.getLockStatus();
+        this.pin = message.getPIN();
+        this.timer = message.getTimer();
+
     }
 
     @Override
-    public String getDetails() {
-        return super.getDeviceID() + "|" + super.getName() + "|" + lockStatus + "|" + password + "|" + timer;
+    public Object PrepareMessage() {
+        return new LockMessage(getDeviceID(), getName(), getLockStatus(), getTimer(), getPIN());
     }
 
-    public String toString(){
-        return super.getName() + "|" + "Smart Lock" + "|" + super.getDeviceID();
+    public int getPIN() {
+        return pin;
+    }
+    public void setPIN(int pin) {
+        this.pin = pin;
+    }
+
+    @Override
+    public String getType() {
+        return "Smart Lock";
+    }
+
+    @Override
+    public void timerUpdate() {
+        //this method is called every 5 second by the timer
+        server.sendToAllClients(PrepareMessage());
     }
 }
