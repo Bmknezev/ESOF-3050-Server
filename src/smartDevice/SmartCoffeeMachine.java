@@ -1,3 +1,27 @@
+//-----------------------------------------------------------------
+// SmartCoffeeMachine.java
+// Group 2
+// Description: This class represents a smart coffee machine device. It manages the status and functionalities of the coffee machine, including cup presence, water and coffee bean levels, brewing timer, coffee type, readiness to brew, and brewing status.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//    - cupStatus: a boolean indicating if a cup is in place or not
+//    - waterLevel: a double representing the water level in the coffee machine (0-1)
+//    - coffeeBeanLevel: a double representing the coffee bean level in the machine (0-1)
+//    - timer: an integer representing the brewing timer (0-60)
+//    - coffeeType: a String representing the type of coffee
+//    - readyToBrew: a boolean indicating if the machine is ready to brew or not
+//    - brewing: a boolean indicating if the machine is currently brewing or not
+//    - coffeeLevel: a double representing the amount of coffee in the pot
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
+
 package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;

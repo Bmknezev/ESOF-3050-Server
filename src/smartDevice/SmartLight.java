@@ -1,3 +1,21 @@
+//-----------------------------------------------------------------
+// SmartLight.java
+// Group 2
+// Description: Represents a smart light device. It manages variables related to light color, brightness, and status. Additionally, it includes methods for updating, preparing messages, and handling automation.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//    - colour: stores the hexadecimal colour value (e.g., 0x000000 for black, 0xFFFFFF for white)
+//    - brightness: indicates the brightness level ranging from 0 to 100
+//    - lightStatus: represents whether the light is on (true) or off (false)
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
 package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;

@@ -1,3 +1,23 @@
+//-----------------------------------------------------------------
+// UserListMessage.java
+// Group 2
+// Description: This class represents a message related to user details, storing information about the user's username, password, admin status, new user status, and user ID.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//    - username: a String representing the username of the user
+//    - password: a String representing the password of the user
+//    - admin: a boolean indicating if the user is an admin or not
+//    - newUser: a boolean indicating if the user is a new user or not
+//    - userID: an integer representing the user's identification number
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
 package messages;
 
 import messages.client.Listable;

@@ -1,3 +1,21 @@
+//-----------------------------------------------------------------
+// SmartDevice.java
+// Group 2
+// Description: This abstract class serves as the base for all smart devices. It contains common methods and variables shared among all smart devices. The abstract methods are implemented in subclasses.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//    - name: a String representing the name of the smart device
+//    - deviceID: an integer representing the identification number of the device
+//    - server: an instance of AbstractServer used for communication
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
 package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;

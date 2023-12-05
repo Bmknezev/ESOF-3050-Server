@@ -1,3 +1,24 @@
+//-----------------------------------------------------------------
+// BrewCoffeeMessage.java
+// Group 2
+// Description: This class represents a message related to brewing coffee, storing information about the device name, ID, size, strength, water level, coffee bean level, brewed coffee level, and temperature for brewing.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//    - size: a String representing the size of the brewed coffee
+//    - strength: a String indicating the strength of the brewed coffee
+//    - waterLevel: a double representing the water level for brewing
+//    - coffeeBeanLevel: a double representing the level of coffee beans for brewing
+//    - coffeeLevel: a double representing the level of brewed coffee
+//    - temperature: a String representing the temperature of the brewed coffee
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
 package messages;
 
 public class BrewCoffeeMessage extends AbstractDeviceMessage{
