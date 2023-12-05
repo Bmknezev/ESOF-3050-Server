@@ -2,8 +2,8 @@
 // SmartCoffeeMachine.java
 // Group 2
 // Description: This class represents a smart coffee machine device. It manages the status and functionalities of the coffee machine, including cup presence, water and coffee bean levels, brewing timer, coffee type, readiness to brew, and brewing status.
-// Created By:
-// Edited By:
+// Created By: Braydon
+// Edited By: Braydon, Liam
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //    - cupStatus: a boolean indicating if a cup is in place or not

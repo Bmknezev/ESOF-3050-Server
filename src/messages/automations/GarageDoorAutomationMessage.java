@@ -4,7 +4,7 @@
 // Description: Represents a message for garage door automation in a system.
 //              Extends AbstractAutomationMessage.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - doorStatus: boolean - Represents the status of the garage door (open or closed).

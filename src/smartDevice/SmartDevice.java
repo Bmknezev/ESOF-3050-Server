@@ -2,8 +2,8 @@
 // SmartDevice.java
 // Group 2
 // Description: This abstract class serves as the base for all smart devices. It contains common methods and variables shared among all smart devices. The abstract methods are implemented in subclasses.
-// Created By:
-// Edited By:
+// Created By: Braydon
+// Edited By: Braydon, Liam
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //    - name: a String representing the name of the smart device

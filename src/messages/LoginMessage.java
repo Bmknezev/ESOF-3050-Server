@@ -3,7 +3,7 @@
 // Group 2
 // Description: Represents a message used for user login.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - username: String - Represents the user's username.

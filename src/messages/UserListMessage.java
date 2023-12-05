@@ -3,7 +3,7 @@
 // Group 2
 // Description: Represents a message related to user management.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - username: String - Username associated with the user message.

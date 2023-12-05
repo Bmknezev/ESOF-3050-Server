@@ -2,8 +2,8 @@
 // Main.java
 // Group 2
 // Description: This program simulates a Smart Home Server where users can add, remove, and adjust various smart devices.
-// Created By:
-// Edited By:
+// Created By: Braydon
+// Edited By: Braydon, Liam
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //  - int choice

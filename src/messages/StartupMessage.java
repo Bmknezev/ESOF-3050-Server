@@ -3,7 +3,7 @@
 // Group 2
 // Description: Represents a message for system or client startup.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - clientID: int - ID associated with the client initiating startup.

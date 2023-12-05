@@ -3,7 +3,7 @@
 // Group 2
 // Description: Represents a message for brewing coffee.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - size: String - Represents the size of the brewed coffee.

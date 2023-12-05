@@ -4,7 +4,7 @@
 // Description: Represents a message for coffee machine automation in a system.
 //              Extends AbstractAutomationMessage.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon, Liam
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - coffeeMachineID: int - Identifier for the coffee machine

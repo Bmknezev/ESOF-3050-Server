@@ -3,7 +3,7 @@
 // Group 2
 // Description: Represents a message used to request or add a new device.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - deviceName: String - Represents the name of the new device.

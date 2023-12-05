@@ -3,15 +3,11 @@
 // Group 2
 // Description: This class represents an abstract automation message that serves as a blueprint for specific automation events.
 // Created By: Braydon
-// Edited By:
+// Edited By: Francisco, Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 // - private int deviceID: Represents the unique identifier of the device involved in the automation.
 // - private Date date: Indicates the timestamp or scheduled time for the automation event.
-// Error Handling:
-//
-//
-//
 //-----------------------------------------------------------------
 
 package messages.automations;

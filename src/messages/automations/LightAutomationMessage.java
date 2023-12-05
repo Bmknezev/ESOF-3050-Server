@@ -4,7 +4,7 @@
 // Description: Represents a message for light automation in a system.
 //              Extends AbstractAutomationMessage.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - colour: String - Represents the color of the light.

@@ -2,18 +2,14 @@
 // User.java
 // Group 2
 // Description: Represents user details within the system.
-// Created By:
-// Edited By:
+// Created By: Braydon
+// Edited By: Braydon, Liam
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 // - username: A string storing the user's username.
 // - password: A string storing the user's password.
 // - admin: A boolean indicating if the user has admin privileges.
 // - userID: An integer representing the user's identification number.
-//
-// Error Handling;
-//
-//
 //
 //-----------------------------------------------------------------
 

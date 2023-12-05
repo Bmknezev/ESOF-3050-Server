@@ -4,7 +4,7 @@
 // Description: Represents an automation message for a thermostat in a system.
 //              Extends AbstractAutomationMessage.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - temperature: int - Represents the temperature for the thermostat.

@@ -4,7 +4,7 @@
 // Description: Interface defining methods for retrieving information
 //              used for listing items.
 // Created By: Francisco
-// Edited By:
+// Edited By: Francsico
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - getNameListable(): String - Retrieves the name of the listable item.

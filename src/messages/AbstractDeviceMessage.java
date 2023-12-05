@@ -3,7 +3,7 @@
 // Group 2
 // Description: Abstract class representing a device message.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //   - deviceName: String - Name of the device.

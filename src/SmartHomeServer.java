@@ -3,7 +3,7 @@
 // Group 2
 // Description: This class represents the Smart Home Server managing various smart devices and client connections.
 // Created By: Braydon
-// Edited By:
+// Edited By: Braydon, Liam
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 // - devices: A list containing SmartDevice instances connected to the Smart Home Server.

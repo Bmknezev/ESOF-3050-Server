@@ -2,8 +2,8 @@
 // SmartThermostat.java
 // Group 2
 // Description: Represents a smart thermostat device. Manages variables related to temperature, setpoint, and system modes (heat, cool, off). Includes methods for updating, preparing messages, and timer updates.
-// Created By:
-// Edited By:
+// Created By: Braydon
+// Edited By: Braydon, Francisco, Liam
 // Approved By: Braydon, Francisco, Liam
 // Variables:
 //    - temperature: current temperature
@@ -11,10 +11,6 @@
 //    - heatEnabled: indicates if heat is enabled
 //    - coolEnabled: indicates if cool is enabled
 //    - mode: the mode the thermostat is in (0 = off, 1 = heat, 2 = cool)
-//
-// Error Handling;
-//
-//
 //
 //-----------------------------------------------------------------
 
