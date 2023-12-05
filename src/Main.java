@@ -14,6 +14,7 @@
 //-----------------------------------------------------------------
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.util.Scanner;
 
 public class Main {
@@ -25,7 +26,11 @@ public class Main {
     public static void main(String[] args) {
 
         SmartHomeServer s = new SmartHomeServer(19920);
-
+        try {
+            System.out.println("Server hosted on IP: " + Inet4Address.getLocalHost());
+        } catch (IOException e) {
+            System.out.println("Error getting IP address");
+        }
 
         try {
             s.listen();
