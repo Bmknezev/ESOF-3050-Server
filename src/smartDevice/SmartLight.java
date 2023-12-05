@@ -107,7 +107,6 @@ public class SmartLight extends SmartDevice{
      */
     @Override
     public Object PrepareMessage() {
-        System.out.println("Preparing message: " + getDeviceID() + " " + getName() + " " + getColour() + " " + getBrightness() + " " + getLightStatus());
         return new LightMessage(getDeviceID(), getName(), getColour(), (int) getBrightness(), getLightStatus());
     }
 
