@@ -18,11 +18,6 @@ import java.net.Inet4Address;
 import java.util.Scanner;
 
 public class Main {
-    /**
-     * This is the main method for the server. It creates a new server and a few devices for testing.
-     * It then starts the server and a timer that updates the devices every 5 seconds.
-     * @param args arguments
-     */
     public static void main(String[] args) {
 
         SmartHomeServer s = new SmartHomeServer(19920);
