@@ -6,7 +6,7 @@
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//  - int choice
+//
 //
 // Error Handling: The program includes error handling for invalid input when selecting options from the menu.
 //
@@ -14,7 +14,6 @@
 //-----------------------------------------------------------------
 
 import java.io.IOException;
-import smartDevice.*;
 import java.util.Scanner;
 
 public class Main {
