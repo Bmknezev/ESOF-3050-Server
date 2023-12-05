@@ -1,3 +1,21 @@
+//-----------------------------------------------------------------
+// SmartLock.java
+// Group 2
+// Description: Represents a smart lock device. Manages variables related to lock status, timer, and PIN for unlocking. Includes methods for authentication, updating, preparing messages, and handling alerts.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//    - lockStatus: indicates whether the lock is locked (true) or unlocked (false)
+//    - timer: represents the time duration before the door automatically locks
+//    - pin: stores the PIN required to unlock the door
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
 package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;

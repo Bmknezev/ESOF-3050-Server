@@ -1,3 +1,22 @@
+//-----------------------------------------------------------------
+// SmartSmokeDetector.java
+// Group 2
+// Description: Represents a smart smoke detector device. Manages variables related to test status, alarm status, and the last test date. Includes methods for updating, preparing messages, and timer updates.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//    - lastTested: date of the last smoke detector test
+//    - testStatus: indicates whether the smoke detector needs testing or not
+//    - alarmStatus: indicates whether the smoke detector alarm is ready or not
+//    - alarm: indicates if the smoke detector alarm is currently going off
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
 package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;

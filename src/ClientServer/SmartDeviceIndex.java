@@ -1,3 +1,19 @@
+//-----------------------------------------------------------------
+// SmartDeviceIndex.java
+// Group 2
+// Description: Manages the indexing of Smart Devices based on their types.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
 package ClientServer;
 
 public class SmartDeviceIndex {

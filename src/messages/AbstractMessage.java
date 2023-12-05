@@ -1,3 +1,18 @@
+//-----------------------------------------------------------------
+// AbstractMessage.java
+// Group 2
+// Description: This abstract class serves as a base for messages, providing a type indicator for different message types.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
 package messages;
 
 public abstract class AbstractMessage implements java.io.Serializable{

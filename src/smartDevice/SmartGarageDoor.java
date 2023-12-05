@@ -1,3 +1,24 @@
+//-----------------------------------------------------------------
+// SmartGarageDoor.java
+// Group 2
+// Description: This class represents a smart garage door device. It contains variables and methods for managing the garage door's status, safety features, password authentication, and communication with the server.
+// Created By:
+// Edited By:
+// Approved By: Braydon, Francisco, Liam
+// Variables:
+//    - safteySwitch: a boolean indicating if an object is detected under the door
+//    - doorStatus: a boolean indicating if the door is open or closed
+//    - moving: a boolean indicating if the door is in motion
+//    - usePassword: a boolean indicating if a password is required to open the door
+//    - pin: an integer storing the password to open the door
+//    - passwordAttempts: an integer tracking the number of incorrect password attempts
+//
+// Error Handling;
+//
+//
+//
+//-----------------------------------------------------------------
+
 package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;
