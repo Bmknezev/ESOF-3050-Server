@@ -110,6 +110,7 @@ public class SmartLight extends SmartDevice{
     public void update(AbstractDeviceMessage msg) {
         LightMessage message = (LightMessage) msg;
         super.update(msg);
+
         setColour(message.getColour());
         setBrightness(message.getBrightness());
         setLightStatus(message.getLightStatus());
@@ -117,6 +118,16 @@ public class SmartLight extends SmartDevice{
         System.out.println(lightStatus + " " + message.getLightStatus());
 
 
+    }
+
+    private boolean isValidColour(String colour) {
+        if (colour.length() != 6)
+            return false;
+        for (int i = 0; i < colour.length(); i++) {
+            if (!Character.isDigit(colour.charAt(i)) && !Character.isLetter(colour.charAt(i)))
+                return false;
+        }
+        return true;
     }
 
     /**
