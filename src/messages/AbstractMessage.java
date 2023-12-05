@@ -1,25 +1,23 @@
 //-----------------------------------------------------------------
 // AbstractMessage.java
 // Group 2
-// Description: This abstract class serves as a base for messages, providing a type indicator for different message types.
+// Description: Base abstract class for messages.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//
-// Error Handling;
-//
-//
+//   - type: int - Indicates the type of message. 1 for requesting device details, 2 for receiving device details, 3 for new client message, 4 for automation message.
 //
 //-----------------------------------------------------------------
 
 package messages;
 
 public abstract class AbstractMessage implements java.io.Serializable{
-   private int type; //1 for requesting device details, 2 for receiving device details, 3 for new client message
+   private int type; //1 for requesting device details, 2 for receiving device details, 3 for new client message, 4 for automation message
 
 
     public AbstractMessage(int type) {
+        //constructor
         this.type = type;
     }
 

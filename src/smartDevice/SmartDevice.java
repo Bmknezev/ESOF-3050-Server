@@ -47,6 +47,7 @@ public abstract class SmartDevice implements Serializable {
         this.server = server;
     }
 
+
     /**
      * This method returns the name of the device.
      * @return name

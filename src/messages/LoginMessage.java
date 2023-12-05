@@ -1,19 +1,15 @@
 //-----------------------------------------------------------------
 // LoginMessage.java
 // Group 2
-// Description: This class represents a message related to user login credentials, storing information about the username, password, login status, and whether the user is an admin or not.
+// Description: Represents a message used for user login.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - username: a String representing the username for login
-//    - password: a String representing the password for login
-//    - loginStatus: a boolean indicating the status of the login (true/false)
-//    - admin: a boolean indicating whether the user is an admin or not (true/false)
-//
-// Error Handling;
-//
-//
+//   - username: String - Represents the user's username.
+//   - password: String - Represents the user's password.
+//   - loginStatus: boolean - Indicates the login status (whether login is successful or not).
+//   - admin: boolean - Indicates whether the user has administrative privileges.
 //
 //-----------------------------------------------------------------
 

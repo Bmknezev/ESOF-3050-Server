@@ -1,19 +1,15 @@
 //-----------------------------------------------------------------
 // PinMessage.java
 // Group 2
-// Description: This class represents a message related to a PIN change, storing information about the device ID, current PIN, new PIN, and the status of the PIN change.
+// Description: Represents a message regarding PIN status and changes.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - pin: an integer representing the current PIN
-//    - newPin: an integer representing the new PIN
-//    - deviceID: an integer representing the ID of the device
-//    - pinStatus: a boolean indicating the status of the PIN change (true/false)
-//
-// Error Handling;
-//
-//
+//   - pin: int - Current PIN associated with a device.
+//   - newPin: int - New PIN requested for a device (if applicable).
+//   - deviceID: int - ID of the device related to the PIN.
+//   - pinStatus: boolean - Status indicating the success or failure of PIN-related operations.
 //
 //-----------------------------------------------------------------
 
@@ -24,6 +20,7 @@ public class PinMessage extends AbstractMessage{
     private int newPin;
     private int deviceID;
     private boolean pinStatus;
+
 
     public PinMessage(int id, int pin, int newPin, boolean pinStatus) {
         super(6);

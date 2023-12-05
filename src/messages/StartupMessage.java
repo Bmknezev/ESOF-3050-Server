@@ -1,16 +1,12 @@
 //-----------------------------------------------------------------
 // StartupMessage.java
 // Group 2
-// Description: This class represents a startup message, containing information about the client ID during initialization.
+// Description: Represents a message for system or client startup.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - clientID: an integer representing the client's identification
-//
-// Error Handling;
-//
-//
+//   - clientID: int - ID associated with the client initiating startup.
 //
 //-----------------------------------------------------------------
 

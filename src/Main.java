@@ -1,18 +1,3 @@
-//-----------------------------------------------------------------
-// Main.java
-// Group 2
-// Description: This program simulates a Smart Home Server where users can add, remove, and adjust various smart devices.
-// Created By:
-// Edited By:
-// Approved By: Braydon, Francisco, Liam
-// Variables:
-//
-//
-// Error Handling: The program includes error handling for invalid input when selecting options from the menu.
-//
-//
-//-----------------------------------------------------------------
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -23,6 +8,7 @@ public class Main {
      * @param args arguments
      */
     public static void main(String[] args) {
+
         SmartHomeServer s = new SmartHomeServer(19920);
 
 

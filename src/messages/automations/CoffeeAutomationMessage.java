@@ -1,19 +1,15 @@
 //-----------------------------------------------------------------
 // CoffeeAutomationMessage.java
 // Group 2
-// Description: This class represents a message related to coffee machine automation, storing information about the coffee machine ID, action, and device ID along with the date.
+// Description: Represents a message for coffee machine automation in a system.
+//              Extends AbstractAutomationMessage.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - coffeeMachineID: an integer representing the ID of the coffee machine
-//    - coffeeMachineAction: an integer representing the action performed by the coffee machine
-//
-// Error Handling:
-//
+//   - coffeeMachineID: int - Identifier for the coffee machine
+//   - coffeeMachineAction: int - Action code for the coffee machine (e.g., start brewing, stop brewing, etc.)
 //-----------------------------------------------------------------
-
-
 
 package messages.automations;
 

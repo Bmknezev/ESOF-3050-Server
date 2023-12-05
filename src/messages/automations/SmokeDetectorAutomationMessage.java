@@ -1,17 +1,13 @@
 //-----------------------------------------------------------------
-// SmokeDetectorAutomation.java
+// SmokeDetectorAutomationMessage.java
 // Group 2
-// Description: This class represents a message related to smoke detector automation, storing information about the device ID and the alarm status of the smoke detector along with the date.
+// Description: Represents an automation message for a smoke detector in a system.
+//              Extends AbstractAutomationMessage.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - alarm: a boolean indicating the alarm status of the smoke detector
-//
-// Error Handling;
-//
-//
-//
+//   - alarm: boolean - Represents the alarm status of the smoke detector.
 //-----------------------------------------------------------------
 
 package messages.automations;

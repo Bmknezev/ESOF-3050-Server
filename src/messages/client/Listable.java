@@ -1,16 +1,15 @@
 //-----------------------------------------------------------------
 // Listable.java
 // Group 2
-// Description: This interface defines methods to retrieve name, category, and ID information for listable items, typically used for user and device listings in a smart system.
+// Description: Interface defining methods for retrieving information
+//              used for listing items.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//
-// Error Handling;
-//
-//
-//
+//   - getNameListable(): String - Retrieves the name of the listable item.
+//   - getCategoryListable(): String - Retrieves the category of the listable item.
+//   - getIDListable(): int - Retrieves the ID of the listable item.
 //-----------------------------------------------------------------
 
 package messages.client;

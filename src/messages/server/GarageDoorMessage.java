@@ -55,5 +55,4 @@ public class GarageDoorMessage extends AbstractDeviceMessage {
     public int getPIN() {
         return password;
     }
-
 }

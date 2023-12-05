@@ -1,17 +1,13 @@
 //-----------------------------------------------------------------
-// AbstractDeviceMesasge.java
+// AbstractDeviceMessage.java
 // Group 2
-// Description: This abstract class serves as a base for messages related to devices, storing information about the device name and ID.
+// Description: Abstract class representing a device message.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - deviceName: a String representing the name of the device
-//    - deviceID: an integer representing the ID of the device
-//
-// Error Handling;
-//
-//
+//   - deviceName: String - Name of the device.
+//   - deviceID: int - ID of the device.
 //
 //-----------------------------------------------------------------
 

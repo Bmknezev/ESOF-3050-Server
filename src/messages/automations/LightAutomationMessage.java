@@ -1,19 +1,15 @@
 //-----------------------------------------------------------------
 // LightAutomationMessage.java
 // Group 2
-// Description: This class represents a message related to light automation, storing information about the device ID, color, brightness, and status of the light along with the date.
+// Description: Represents a message for light automation in a system.
+//              Extends AbstractAutomationMessage.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - colour: a String representing the color of the light
-//    - brightness: an integer indicating the brightness level of the light
-//    - lightStatus: a boolean indicating the status of the light (on/off)
-//
-// Error Handling;
-//
-//
-//
+//   - colour: String - Represents the color of the light.
+//   - brightness: int - Represents the brightness level of the light.
+//   - lightStatus: boolean - Represents the status of the light (on or off).
 //-----------------------------------------------------------------
 
 package messages.automations;

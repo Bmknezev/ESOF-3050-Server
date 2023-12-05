@@ -1,19 +1,15 @@
 //-----------------------------------------------------------------
 // LockAutomationMessage.java
 // Group 2
-// Description: This class represents a message related to lock automation, storing information about the device ID, status of the lock, timer duration, personal identification number (PIN) along with the date.
+// Description: Represents a message for lock automation in a system.
+//              Extends AbstractAutomationMessage.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - lockStatus: a boolean indicating the status of the lock (locked/unlocked)
-//    - timer: an integer representing the timer duration for the lock
-//    - pin: an integer representing the personal identification number for the lock
-//
-// Error Handling;
-//
-//
-//
+//   - lockStatus: boolean - Represents the status of the lock (locked or unlocked).
+//   - timer: int - Represents a timer associated with the lock.
+//   - pin: int - Represents the Personal Identification Number (PIN) used with the lock.
 //-----------------------------------------------------------------
 
 package messages.automations;

@@ -1,18 +1,14 @@
 //-----------------------------------------------------------------
 // ThermostatAutomationMessage.java
 // Group 2
-// Description: This class represents a message related to thermostat automation, storing information about the device ID, temperature setting, and status of the thermostat along with the date.
+// Description: Represents an automation message for a thermostat in a system.
+//              Extends AbstractAutomationMessage.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - temperature: an integer representing the temperature set on the thermostat
-//    - thermostatStatus: a boolean indicating the status of the thermostat (on/off)
-//
-// Error Handling;
-//
-//
-//
+//   - temperature: int - Represents the temperature for the thermostat.
+//   - thermostatStatus: boolean - Represents the status of the thermostat.
 //-----------------------------------------------------------------
 
 package messages.automations;

@@ -1,15 +1,15 @@
 //-----------------------------------------------------------------
 // AbstractAutomationMessage.java
 // Group 2
-// Description: This abstract class serves as a base for messages related to automation, containing information about the device ID and date for automation messages.
+// Description: This class represents an abstract automation message that serves as a blueprint for specific automation events.
 // Created By:
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
-//    - deviceID: an integer representing the ID of the device
-//    - date: a Date object indicating the timestamp of the message
-//
+// - private int deviceID: Represents the unique identifier of the device involved in the automation.
+// - private Date date: Indicates the timestamp or scheduled time for the automation event.
 // Error Handling:
+//
 //
 //
 //-----------------------------------------------------------------
