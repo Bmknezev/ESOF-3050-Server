@@ -2,7 +2,7 @@
 // SmartHomeServer.java
 // Group 2
 // Description: This class represents the Smart Home Server managing various smart devices and client connections.
-// Created By:
+// Created By: Braydon
 // Edited By:
 // Approved By: Braydon, Francisco, Liam
 // Variables:
