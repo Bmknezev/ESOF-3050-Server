@@ -190,9 +190,6 @@ public class SmartHomeServer extends AbstractServer {
             case 4:
                 device = new SmartGarageDoor(deviceID, message.getDeviceName(), message.getPIN(), this);
                 break;
-            case 5:
-                device = new SmartSmokeDetector(deviceID, message.getDeviceName(), this);
-                break;
             default:
                 System.out.println("Error: Device type not found");
                 return;
