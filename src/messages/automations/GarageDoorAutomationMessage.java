@@ -16,13 +16,24 @@ import java.util.Date;
 
 public class GarageDoorAutomationMessage extends AbstractAutomationMessage{
     private boolean doorStatus;
+    int timer, pin;
 
-    public GarageDoorAutomationMessage(int deviceID, boolean doorStatus, Date date) {
+    public GarageDoorAutomationMessage(int deviceID, boolean doorStatus, int timer, int pin, Date date) {
         super(deviceID, date, 4);
         this.doorStatus = doorStatus;
+        this.timer = timer;
+        this.pin = pin;
     }
 
     public boolean getDoorStatus() {
         return doorStatus;
+    }
+
+    public int getTimer() {
+        return timer;
+    }
+
+    public int getPIN() {
+        return pin;
     }
 }

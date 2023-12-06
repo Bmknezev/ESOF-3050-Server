@@ -16,20 +16,8 @@ package messages.automations;
 import java.util.Date;
 
 public class CoffeeAutomationMessage extends AbstractAutomationMessage{
-    private int coffeeMachineID;
-    private int coffeeMachineAction;
 
-    public CoffeeAutomationMessage(int deviceID, int coffeeMachineID, int coffeeMachineAction, Date date) {
+    public CoffeeAutomationMessage(int deviceID, Date date) {
         super(deviceID, date, 3);
-        this.coffeeMachineID = coffeeMachineID;
-        this.coffeeMachineAction = coffeeMachineAction;
-    }
-
-    public int getCoffeeMachineID() {
-        return coffeeMachineID;
-    }
-
-    public int getCoffeeMachineAction() {
-        return coffeeMachineAction;
     }
 }

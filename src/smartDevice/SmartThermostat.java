@@ -18,6 +18,9 @@ package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
+import messages.automations.AbstractAutomationMessage;
+import messages.automations.LockAutomationMessage;
+import messages.automations.ThermostatAutomationMessage;
 import messages.server.ThermostatMessage;
 
 public class SmartThermostat extends SmartDevice{
@@ -120,6 +123,13 @@ public class SmartThermostat extends SmartDevice{
 
     @Override
     public void timerUpdate() {
+        server.sendToAllClients(PrepareMessage());
+    }
+
+    @Override
+    public void Automation(AbstractAutomationMessage msg) {
+        ThermostatAutomationMessage message = (ThermostatAutomationMessage) msg;
+        this.setpoint = message.getTemperature();
         server.sendToAllClients(PrepareMessage());
     }
 

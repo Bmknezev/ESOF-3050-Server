@@ -315,6 +315,7 @@ public class SmartHomeServer extends AbstractServer {
         //get device from list
         for(SmartDevice device : devices){
             if(device.getDeviceID() == msg.getDeviceID()){
+                System.out.println("oingo boingo");
                 //schedule task if device is found
                 timer.schedule(new java.util.TimerTask() {
                     @Override

@@ -16,6 +16,9 @@ package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
+import messages.automations.AbstractAutomationMessage;
+import messages.automations.LightAutomationMessage;
+import messages.automations.LockAutomationMessage;
 import messages.server.LockMessage;
 
 public class SmartLock extends SmartDevice{
@@ -106,6 +109,15 @@ public class SmartLock extends SmartDevice{
     @Override
     public void timerUpdate() {
         //this method is called every 5 second by the timer
+        server.sendToAllClients(PrepareMessage());
+    }
+
+    @Override
+    public void Automation(AbstractAutomationMessage msg) {
+        LockAutomationMessage message = (LockAutomationMessage) msg;
+        this.lockStatus = message.getLockStatus();
+        this.pin = message.getPIN();
+        this.timer = message.getTimer();
         server.sendToAllClients(PrepareMessage());
     }
 }

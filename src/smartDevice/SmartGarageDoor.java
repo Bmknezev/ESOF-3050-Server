@@ -19,6 +19,9 @@ package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
+import messages.automations.AbstractAutomationMessage;
+import messages.automations.GarageDoorAutomationMessage;
+import messages.automations.LockAutomationMessage;
 import messages.server.GarageDoorMessage;
 
 public class SmartGarageDoor extends SmartDevice{
@@ -27,6 +30,7 @@ public class SmartGarageDoor extends SmartDevice{
     private boolean moving; //true if door is moving, false if door is not moving
     private boolean usePassword; //true if password is needed to open door, false if password is not needed
     private int pin; //password to open door
+    private int timer;
     private int passwordAttempts; //number of times password has been entered incorrectly
 
     /** This is the constructor for the SmartGarageDoor class.
@@ -138,6 +142,15 @@ public class SmartGarageDoor extends SmartDevice{
 
     @Override
     public void timerUpdate() {
+        server.sendToAllClients(PrepareMessage());
+    }
+
+    @Override
+    public void Automation(AbstractAutomationMessage msg) {
+        GarageDoorAutomationMessage message = (GarageDoorAutomationMessage) msg;
+        this.doorStatus = message.getDoorStatus();
+        this.pin = message.getPIN();
+        this.timer = message.getTimer();
         server.sendToAllClients(PrepareMessage());
     }
 }

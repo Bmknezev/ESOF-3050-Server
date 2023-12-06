@@ -26,6 +26,9 @@ package smartDevice;
 
 import com.lloseng.ocsf.server.AbstractServer;
 import messages.AbstractDeviceMessage;
+import messages.automations.AbstractAutomationMessage;
+import messages.automations.CoffeeAutomationMessage;
+import messages.automations.GarageDoorAutomationMessage;
 import messages.server.CoffeeMessage;
 import messages.BrewCoffeeMessage;
 
@@ -246,6 +249,12 @@ public class SmartCoffeeMachine extends SmartDevice{
         //and update its battery level
         //this is run on the JavaFX thread
         //this method is empty because the coffee machine does not need to update anything
+        server.sendToAllClients(PrepareMessage());
+    }
+
+    @Override
+    public void Automation(AbstractAutomationMessage msg) {
+        CoffeeAutomationMessage message = (CoffeeAutomationMessage) msg;
         server.sendToAllClients(PrepareMessage());
     }
 }
